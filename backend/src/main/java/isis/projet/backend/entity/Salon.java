@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,7 +26,8 @@ public class Salon {
 @NotEmpty
     private String name ;
 
-
+@OneToMany
+    private List<Formulaire> formulaire = new ArrayList<Formulaire>() ;
 
 
 }
