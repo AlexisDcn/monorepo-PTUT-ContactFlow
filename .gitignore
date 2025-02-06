@@ -53,3 +53,4 @@ security/target/
 selenium-debug.log
 
 !.mvn/wrapper/maven-wrapper.jar
+.idea/dataSources.local.xml
