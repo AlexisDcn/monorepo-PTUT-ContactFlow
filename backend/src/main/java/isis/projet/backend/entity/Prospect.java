@@ -11,7 +11,6 @@ import java.math.BigInteger;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @ToString
 @Entity
 public class Prospect {

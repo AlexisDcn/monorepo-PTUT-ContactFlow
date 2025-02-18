@@ -8,10 +8,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
+@AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @ToString
 @Entity
 public class Formation {
