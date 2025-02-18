@@ -5,7 +5,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="ISIS logo" class="logo" src="@/assets/logo-ISIS-vertical-RVB.svg" width="125" height="125" />
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
@@ -18,12 +18,23 @@ import HelloWorld from './components/HelloWorld.vue'
   </header>
 
   <RouterView />
+
+  <footer>
+
+  </footer>
 </template>
 
 <style scoped>
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Pour éviter qu'il soit caché par d'autres éléments */
+  padding: 1rem;
   line-height: 1.5;
   max-height: 100vh;
+  /*background-color: #2F2769;*/
 }
 
 .logo {
