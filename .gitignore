@@ -54,3 +54,4 @@ selenium-debug.log
 
 !.mvn/wrapper/maven-wrapper.jar
 .idea/dataSources.local.xml
+.idea/dataSources.xml
