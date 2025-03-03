@@ -69,5 +69,5 @@ public class Prospect {
     
 
     @ManyToOne
-    private Formulaire formulaire;
+    private Salon id_salon;
 }

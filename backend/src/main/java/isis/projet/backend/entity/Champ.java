@@ -24,8 +24,4 @@ public class Champ {
     private String type;
 
     private String placeholder;
-
-    @ManyToMany
-    private List<ChampForm> champForm = new ArrayList<>();
-
 }

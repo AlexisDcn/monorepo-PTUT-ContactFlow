@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -21,13 +22,18 @@ public class Salon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
 
-@NonNull
-@NotBlank
-@NotEmpty
-    private String name ;
+    @NonNull
+    @NotBlank
+    @NotEmpty
+    private String nom ;
 
-@OneToMany
-    private List<Formulaire> formulaire = new ArrayList<Formulaire>() ;
+    @NonNull
+    @NotBlank
+    @NotEmpty
+    private Date date ;
+
+    @OneToMany
+    private List<Formulaire> id_formu = new ArrayList<Formulaire>() ;
 
 
 }

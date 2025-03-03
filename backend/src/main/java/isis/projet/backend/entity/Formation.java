@@ -22,6 +22,6 @@ public class Formation {
     @NonNull
     @NotBlank
     @NotEmpty
-    private String name;
+    private String nom;
 
 }
