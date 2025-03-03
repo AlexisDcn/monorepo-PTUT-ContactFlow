@@ -1,12 +1,12 @@
 package isis.projet.backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -23,5 +23,8 @@ public class Formation {
     @NotBlank
     @NotEmpty
     private String nom;
+
+    @ManyToMany
+    private List<Prospect> id_prospect = new ArrayList<>();
 
 }

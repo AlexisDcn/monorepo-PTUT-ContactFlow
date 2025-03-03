@@ -24,4 +24,10 @@ public class Champ {
     private String type;
 
     private String placeholder;
+
+    @ManyToMany
+    private List<Prospect> id_prospect = new ArrayList<>();
+
+    @ManyToMany
+    private List<Formulaire> id_formu = new ArrayList<>();
 }

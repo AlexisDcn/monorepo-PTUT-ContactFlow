@@ -28,10 +28,6 @@ public class ProspectChamp {
     @NotBlank // Validation : ne doit pas contenir uniquement des espaces
     private Integer valeur_num;
 
-    @ManyToMany
-    private List<Prospect> id_prospect = new ArrayList<>();
 
-    @ManyToMany
-    private List<Champ> id_champ = new ArrayList<>();
 
 }

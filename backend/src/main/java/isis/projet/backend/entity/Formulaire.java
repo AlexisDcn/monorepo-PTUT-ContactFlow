@@ -32,5 +32,8 @@ public class Formulaire {
 
     @OneToMany
     private List<Salon>salons = new ArrayList<>();
+
+    @ManyToMany
+    private List<Champ> id_champ = new ArrayList<>();
     
 }

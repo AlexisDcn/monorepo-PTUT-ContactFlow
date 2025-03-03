@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -70,4 +72,11 @@ public class Prospect {
 
     @ManyToOne
     private Salon id_salon;
+
+    @ManyToMany
+    private List<Formation> id_forma = new ArrayList<>();
+
+
+    @ManyToMany
+    private List<Champ> id_champ = new ArrayList<>();
 }
