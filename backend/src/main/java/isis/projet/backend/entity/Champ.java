@@ -26,6 +26,6 @@ public class Champ {
     private String placeholder;
 
     @ManyToMany
-    private List<ChampForm> champForm = new ArrayList<>();
+    private List<ChampForm>  = new ArrayList<>();
 
 }
