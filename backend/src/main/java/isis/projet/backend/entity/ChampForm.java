@@ -22,11 +22,14 @@ import java.util.List;
 public class ChampForm {
 
     // Id de l'entrée dans la table ChampForm (clé primaire, auto-générée)
-    @ManyToMany
-    private List<Champ> id_champs = new ArrayList<>();
+    @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToMany
-    private List<Formulaire> id_form = new ArrayList<>();
+    private List<Champ> champs = new ArrayList<>();
+
+    @ManyToMany
+    private List<Formulaire> formulaires = new ArrayList<>();
 
 
 }
