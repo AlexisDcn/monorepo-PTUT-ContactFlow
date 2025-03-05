@@ -85,8 +85,17 @@ function refresh() {
     .catch(error => alert(error.message));
 }
 
+function getProspect(){
+  doAjaxRequest("/api/prospects")
+  .then((result) => {
+      console.log(result);
+    })
+      .catch(error => alert(error.message));
+}
+
+
 // Appeler la fonction refresh() pour récupérer la liste des pays au chargement du composant
-onMounted(refresh);
+onMounted(getProspect);
 </script>
 
 <!-- Un CSS pour ce composant -->
