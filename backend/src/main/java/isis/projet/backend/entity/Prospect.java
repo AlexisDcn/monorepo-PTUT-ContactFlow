@@ -74,9 +74,9 @@ public class Prospect {
     private Salon id_salon;
 
     @ManyToMany
-    private List<Formation> id_forma = new ArrayList<>();
+    private List<Formation> formations = new ArrayList<>();
 
 
     @ManyToMany
-    private List<Champ> id_champ = new ArrayList<>();
+    private List<Champ> champs = new ArrayList<>();
 }

@@ -34,6 +34,6 @@ public class Formulaire {
     private List<Salon>salons = new ArrayList<>();
 
     @ManyToMany
-    private List<Champ> id_champ = new ArrayList<>();
+    private List<Champ> champs = new ArrayList<>();
     
 }

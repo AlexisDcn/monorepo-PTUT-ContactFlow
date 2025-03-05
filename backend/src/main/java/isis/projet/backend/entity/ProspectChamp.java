@@ -28,6 +28,4 @@ public class ProspectChamp {
     @NotBlank // Validation : ne doit pas contenir uniquement des espaces
     private Integer valeur_num;
 
-
-
 }

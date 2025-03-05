@@ -29,5 +29,5 @@ public class Champ {
     private List<Prospect> id_prospect = new ArrayList<>();
 
     @ManyToMany
-    private List<Formulaire> id_formu = new ArrayList<>();
+    private List<Formulaire> formulaires = new ArrayList<>();
 }

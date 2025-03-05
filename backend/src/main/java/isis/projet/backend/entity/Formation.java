@@ -25,6 +25,6 @@ public class Formation {
     private String nom;
 
     @ManyToMany
-    private List<Prospect> id_prospect = new ArrayList<>();
+    private List<Prospect> prospects = new ArrayList<>();
 
 }
