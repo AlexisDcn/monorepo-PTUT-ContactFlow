@@ -1,6 +1,9 @@
 package isis.projet.backend.entity;
+
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -8,13 +11,16 @@ import lombok.*;
 @Entity
 public class Info {
 
-    @Id
+    @EmbeddedId
+    private InfoId id;
+
     @ManyToOne
+    @MapsId("prospect")
     @JoinColumn(name = "id_prospect")
     private Prospect prospect;
 
-    @Id
     @ManyToOne
+    @MapsId("champ")
     @JoinColumn(name = "id_champ")
     private Champ champ;
 

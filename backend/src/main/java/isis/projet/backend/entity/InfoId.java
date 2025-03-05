@@ -5,22 +5,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+import java.util.Objects;
+
+@Embeddable
 @Getter
 @Setter
 @ToString
-@Entity
-public class Suivie {
-
-    @EmbeddedId
-    private SuivieId id;
+public class InfoId implements Serializable {
 
     @ManyToOne
-    @MapsId("prospect")
     @JoinColumn(name = "id_prospect")
     private Prospect prospect;
 
     @ManyToOne
-    @MapsId("formation")
-    @JoinColumn(name = "id")
-    private Formation formation;
+    @JoinColumn(name = "id_champ")
+    private Champ champ;
+
 }

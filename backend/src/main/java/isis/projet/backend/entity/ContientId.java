@@ -5,22 +5,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+import java.util.Objects;
+
+@Embeddable
 @Getter
 @Setter
 @ToString
-@Entity
-public class Contient {
-
-    @EmbeddedId
-    private ContientId id;
+public class ContientId implements Serializable {
 
     @ManyToOne
-    @MapsId("champ")
     @JoinColumn(name = "id_champ")
     private Champ champ;
 
     @ManyToOne
-    @MapsId("formulaire")
     @JoinColumn(name = "id_form")
     private Formulaire formulaire;
+
 }
