@@ -20,20 +20,13 @@ import java.util.List;
 @ToString
 @Entity
 public class Formulaire {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idForm;
+    private boolean actif;
 
-    // Id du formulaire (clé primaire, auto-générée)
-    @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NonNull
-    @NotBlank
-    @NotEmpty
-    private Boolean actif ;
-
-    @OneToMany
-    private List<Salon>salons = new ArrayList<>();
-
-    @ManyToMany
-    private List<Champ> id_champ = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "id_salon", nullable = false)
+    private Salon salon;
     
 }

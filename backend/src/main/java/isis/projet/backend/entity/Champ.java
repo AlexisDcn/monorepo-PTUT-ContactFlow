@@ -13,21 +13,13 @@ import java.util.List;
 // Un exemple d'entité
 // On utilise Lombok pour auto-générer getter / setter / toString...
 // cf. https://examples.javacodegeeks.com/spring-boot-with-lombok/
-@Getter @Setter @NoArgsConstructor @RequiredArgsConstructor @ToString
+@Getter @Setter @ToString
 @Entity
 public class Champ {
     // Id de l'entrée dans la table Champ (clé primaire, auto-générée)
-    @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NonNull
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idChamp;
     private String type;
-
-    private String placeholder;
-
-    @ManyToMany
-    private List<Prospect> id_prospect = new ArrayList<>();
-
-    @ManyToMany
-    private List<Formulaire> id_formu = new ArrayList<>();
+    private String placeholders;
 }
