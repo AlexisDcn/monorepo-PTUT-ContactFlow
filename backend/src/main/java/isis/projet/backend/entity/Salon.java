@@ -33,7 +33,7 @@ public class Salon {
     private Date date ;
 
     @OneToMany
-    private List<Formulaire> id_formu = new ArrayList<Formulaire>() ;
+    private List<Formulaire> formulaires = new ArrayList<Formulaire>() ;
 
 
 }

@@ -26,7 +26,7 @@ public class Champ {
     private String placeholder;
 
     @ManyToMany
-    private List<Prospect> id_prospect = new ArrayList<>();
+    private List<Prospect> prospects = new ArrayList<>();
 
     @ManyToMany
     private List<Formulaire> formulaires = new ArrayList<>();
