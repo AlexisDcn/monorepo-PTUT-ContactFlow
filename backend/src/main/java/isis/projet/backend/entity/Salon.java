@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -30,7 +30,7 @@ public class Salon {
     @NonNull
     @NotBlank
     @NotEmpty
-    private Date date ;
+    private LocalDate date ;
 
     @OneToMany
     private List<Formulaire> formulaires = new ArrayList<Formulaire>() ;
