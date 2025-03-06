@@ -16,67 +16,18 @@ import java.util.List;
 @ToString
 @Entity
 public class Prospect {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(unique=true)
-    @NonNull // Lombok : génère un constructeur avec ce paramètre
-    @NotBlank // Validation : ne doit pas contenir uniquement des espaces
-    @NotEmpty // Validation : ne doit pas être vide
+    private int idProspect;
     private String nom;
-
-    @Column(unique=true)
-    @NonNull // Lombok : génère un constructeur avec ce paramètre
-    @NotBlank // Validation : ne doit pas contenir uniquement des espaces
-    @NotEmpty // Validation : ne doit pas être vide
     private String prenom;
-
-    @Column(unique=true)
-    @NonNull // Lombok : génère un constructeur avec ce paramètre
-    @NotBlank // Validation : ne doit pas contenir uniquement des espaces
-    @NotEmpty // Validation : ne doit pas être vide
-    private long numTel;
-
-    @Column(unique=true)
-    @NonNull // Lombok : génère un constructeur avec ce paramètre
-    @NotBlank // Validation : ne doit pas contenir uniquement des espaces
-    @NotEmpty // Validation : ne doit pas être vide
-    private String email;
-
-    @Column(unique=true)
-    @NonNull // Lombok : génère un constructeur avec ce paramètre
-    @NotBlank // Validation : ne doit pas contenir uniquement des espaces
-    @NotEmpty // Validation : ne doit pas être vide
+    private String numTel;
+    private String mail;
     private String ville;
-
-    @Column(unique=true)
-    @NonNull // Lombok : génère un constructeur avec ce paramètre
-    @NotBlank // Validation : ne doit pas contenir uniquement des espaces
-    @NotEmpty // Validation : ne doit pas être vide
     private String departement;
-
-    @Column(unique=true)
-    @NonNull // Lombok : génère un constructeur avec ce paramètre
-    @NotBlank // Validation : ne doit pas contenir uniquement des espaces
-    @NotEmpty // Validation : ne doit pas être vide
-    private long codePostal;
-
-    @Column(unique=true)
-    @NonNull // Lombok : génère un constructeur avec ce paramètre
-    @NotBlank // Validation : ne doit pas contenir uniquement des espaces
-    @NotEmpty // Validation : ne doit pas être vide
-    private String etablissement;
-    
+    private String codePostal;
 
     @ManyToOne
-    private Salon id_salon;
-
-    @ManyToMany
-    private List<Formation> formations = new ArrayList<>();
-
-
-    @ManyToMany
-    private List<Champ> champs = new ArrayList<>();
+    @JoinColumn(name = "id_salon", nullable = false)
+    private Salon salon;
 }

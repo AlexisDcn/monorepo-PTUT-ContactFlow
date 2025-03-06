@@ -17,14 +17,7 @@ import java.util.List;
 public class Formation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @NonNull
-    @NotBlank
-    @NotEmpty
+    private int id;
     private String nom;
-
-    @ManyToMany
-    private List<Prospect> prospects = new ArrayList<>();
 
 }
