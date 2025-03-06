@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Prospects</h2>
+    <h2>Statistiques générales</h2>
     <ComponentFormulaire />
   </div>
 </template>
