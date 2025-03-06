@@ -27,9 +27,9 @@
         </thead>
         <tbody>
         <!-- Une ligne pour chaque pays -->
-        <tr v-for="country in data.countries" :key="country.id">
-          <td>{{ country.code }}</td>
-          <td>{{ country.name }}</td>
+        <tr v-for="country in data.prospects" :key="country.idProspect">
+          <td>{{ country.idProspect }}</td>
+          <td>{{ country.nom }}</td>
         </tr>
         </tbody>
       </table>
@@ -54,6 +54,7 @@ let data = reactive({
   formulaire: { ...paysVide },
   // Les pays récupérés depuis l'API
   countries: [],
+  prospects : [],
 });
 
 function ajoutePays() {
@@ -88,7 +89,7 @@ function refresh() {
 function getProspect(){
   doAjaxRequest("/api/prospects")
   .then((result) => {
-      console.log(result);
+      data.prospects = result._embedded.prospects;
     })
       .catch(error => alert(error.message));
 }
