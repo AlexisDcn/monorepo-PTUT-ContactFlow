@@ -1,12 +1,13 @@
 <template>
   <div>
-    <h2>Ajouter un pays</h2>
-    <CountryForm />
+    <h2>Prospects</h2>
+    <ComponentFormulaire />
   </div>
 </template>
 
 <script setup>
-import CountryForm from "@/components/CountryForm.vue";
+
+import ComponentFormulaire from "@/components/ComponentFormulaire.vue";
 </script>
 
 
@@ -17,6 +18,7 @@ import CountryForm from "@/components/CountryForm.vue";
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 }
 </style>

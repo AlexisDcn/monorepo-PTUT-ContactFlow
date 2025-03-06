@@ -23,6 +23,7 @@ public class Formulaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idForm;
+
     private boolean actif;
 
     @ManyToOne
