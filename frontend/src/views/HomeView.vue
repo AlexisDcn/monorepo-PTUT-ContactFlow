@@ -6,5 +6,5 @@
 </template>
 
 <script setup>
-// Vous pouvez ajouter des scripts ici si nécessaire
+
 </script>
