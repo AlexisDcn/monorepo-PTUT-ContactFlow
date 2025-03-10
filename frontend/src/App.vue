@@ -4,7 +4,7 @@
     <v-app-bar app color="primary" dark>
       <!-- Logo -->
       <v-img
-        src="@/assets/logo-ISIS-vertical-BLANC.svg"
+        src="src/assets/logo-ISIS-vertical-BLANC.svg"
         max-height="40"
         max-width="150"
         contain
