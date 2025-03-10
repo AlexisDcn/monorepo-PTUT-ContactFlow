@@ -1,5 +1,5 @@
 <template>
-  <v-container class="container">
+  <v-container class="container fill-height">
     <v-btn @click="retourAccueil" color="secondary" class="mb-4">Retour</v-btn>
     <v-data-table :headers="headers" :items="data.prospects" item-value="idProspect">
       <template v-slot:item="{ item }">
@@ -75,5 +75,9 @@ onMounted(getProspect);
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   overflow-x: auto;
+}
+
+.fill-height {
+  height: 100%;
 }
 </style>

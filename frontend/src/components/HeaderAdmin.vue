@@ -1,42 +1,23 @@
 <template>
-  <v-app-bar app color="primary" dark>
-    <v-toolbar-title>Contact’Flow</v-toolbar-title>
+  <v-app-bar app color="1" dark>
+    <!-- Logo -->
+    <v-img
+      src="@/assets/logo-ISIS-vertical-BLANC.svg"
+      max-height="40"
+      max-width="150"
+      contain
+      @click="$router.push('/')"
+      style="cursor: pointer;"
+    ></v-img>
+
     <v-spacer></v-spacer>
-    <v-btn text to="/">Home</v-btn>
-    <v-btn text to="/admin">Admin</v-btn>
+
+    <!-- Bouton Statistiques générales -->
+    <v-btn text to="/admin">Statistiques générales</v-btn>
   </v-app-bar>
-  <v-main>
-    <router-view />
-  </v-main>
 </template>
 
 <script setup>
-import { RouterView } from 'vue-router'
+import { useRouter } from 'vue-router';
+useRouter();
 </script>
-
-<style scoped>
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 1rem;
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-nav a {
-  color: black;
-  text-decoration: none;
-}
-
-nav a:hover {
-  color: gray;
-}
-
-nav a.router-link-exact-active {
-  color: black;
-  background-color: gray;
-}
-</style>
