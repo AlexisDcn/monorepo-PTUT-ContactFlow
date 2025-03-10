@@ -14,5 +14,6 @@ public class Champ {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idChamp;
     private String type;
+    private String nom;
     private String placeholders;
 }
