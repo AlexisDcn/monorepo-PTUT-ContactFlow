@@ -19,10 +19,10 @@
     <!-- Création dynamique du Formulaire -->
     <div>
       <form @submit.prevent="ajouteProspect">
-        <input v-for="champ in data.champs"
-               v-model="data.formulaire[champ.nom]"
-               :type="champ.type" :placeholder="champ.placeholders"
-        />
+      <input v-for="champ in data.champs"
+             v-model="data.formulaire[champ.nom]"
+             :type="champ.type" :placeholder="champ.placeholders"
+      />
         <button type="submit">Ajouter</button>
       </form>
       <!-- Un tableau pour afficher la liste des pays -->
