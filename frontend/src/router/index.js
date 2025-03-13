@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: ProspectForm,
+      component: ()=> import('../views/HomeView.vue')
     },
     {
       path: '/admin',
