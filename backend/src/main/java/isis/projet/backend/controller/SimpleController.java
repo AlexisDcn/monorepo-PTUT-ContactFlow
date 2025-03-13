@@ -1,6 +1,9 @@
 package isis.projet.backend.controller;
 
+import isis.projet.backend.entity.Champ;
 import isis.projet.backend.entity.Formulaire;
+import isis.projet.backend.service.ChampService;
+import isis.projet.backend.service.ContientService;
 import isis.projet.backend.service.CountryService;
 import isis.projet.backend.service.FormulaireService;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +20,12 @@ import java.util.Map;
 public class SimpleController {
     private final CountryService countryService;
     private final FormulaireService formulaireService;
+    private final ContientService contientService;
 
-    public SimpleController(CountryService countryService, FormulaireService formulaireService) {
+    public SimpleController(CountryService countryService, FormulaireService formulaireService, ContientService contientService) {
         this.countryService = countryService;
         this.formulaireService = formulaireService;
+        this.contientService = contientService;
     }
 
     @GetMapping("/hello")
@@ -42,6 +47,11 @@ public class SimpleController {
         return Map.of("formulaire", formulaireService.formulairesActifs());
     }
 
+    @GetMapping("/getChampFormu/{idForm}")
+    public Map<String, List<Champ>> getChampFormu(@PathVariable("idForm") Integer idForm) {
+        log.info("Service getChampFormu, idForm = " + idForm);
+        return Map.of("champs", contientService.champsFormu(idForm));
+    }
 }
 
 

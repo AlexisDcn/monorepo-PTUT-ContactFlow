@@ -53,7 +53,7 @@ import doAjaxRequest from '@/util/util.js'
 
 
 // Récupère le props du salon
-const props = defineProps(["idSalon"]);
+const props = defineProps(["idSalon", "idForm"]);
 // Pour réinitialiser le formulaire
 // const prospectVide = {
 //   nom: '',
@@ -107,10 +107,10 @@ function getProspect() {
     .catch((error) => alert(error.message))
 }
 
-function getChamp() {
-  doAjaxRequest('/api/champs')
+function getChampFormu(idForm) {
+  doAjaxRequest(`/rest/getChampFormu/${idForm}`)
     .then((result) => {
-      data.champs = result._embedded.champs
+      data.champs = result.champs
 
       // Création du dico qui permet l'envoi des données
       for (let elmnt of data.champs){
@@ -127,7 +127,7 @@ function getChamp() {
 // Appeler la fonction refresh() pour récupérer la liste des pays au chargement du composant
 onMounted(() => {
   getProspect()
-  getChamp()
+  getChampFormu(parseInt(props.idSalon))
 })
 </script>
 
