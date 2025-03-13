@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ChoixFormu from "@/components/ChoixFormu.vue";
-
+import StatGenView from "@/views/StatGenView.vue";
+import HomeView from "@/views/HomeView.vue";
+import AdminView from "@/views/AdminView.vue";
+import GraphiqueEvolutifView from "@/views/GraphiqueEvolutifView.vue";
+import AjouterDesOptionsView from "@/views/AjouterDesOptionsView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,7 +11,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: ChoixFormu,
+      component: HomeView,
     },
     {
       path: '/formulaire/:idSalon',
@@ -18,10 +21,22 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'admin',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AdminView.vue'),
+      component: AdminView,
+    },
+    {
+      path: '/statistiques-generales',
+      name: 'statistiques-generales',
+      component: StatGenView,
+    },
+    {
+      path: '/graphique-evolutif',
+      name: 'graphique-evolutif',
+      component: GraphiqueEvolutifView,
+    },
+    {
+      path: '/ajouter-des-options',
+      name: 'ajouter-des-options',
+      component: AjouterDesOptionsView,
     },
   ],
 })

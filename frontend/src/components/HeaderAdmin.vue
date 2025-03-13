@@ -13,7 +13,7 @@
     <v-spacer></v-spacer>
 
     <!-- Bouton Statistiques générales -->
-    <v-btn class="StatsGen" to="/admin">Statistiques générales</v-btn>
+    <v-btn class="Se-Connecter" to="/admin">Se Connecter</v-btn>
   </v-app-bar>
 </template>
 
@@ -28,7 +28,7 @@ useRouter();
   display: flex;
   align-items: center;
 }
-.StatsGen {
+.Se-Connecter {
   position: absolute;
   left: 80%;
   top: 30%;

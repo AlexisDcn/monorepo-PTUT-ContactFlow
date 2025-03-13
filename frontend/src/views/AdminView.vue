@@ -1,13 +1,22 @@
 <template>
-  <v-container class="fill-height">
+  <v-container class="fill-height text-center">
     <HeaderAdmin />
-    <StatsGen />
+    <v-row justify="center" align="center" class="mt-16">
+      <v-col cols="4">
+        <v-btn to="/graphique-evolutif" color="primary" block>Graphique évolutif</v-btn>
+      </v-col>
+      <v-col cols="4">
+        <v-btn to="/statistiques-generales" color="primary" block>Statistiques générales</v-btn>
+      </v-col>
+      <v-col cols="4">
+        <v-btn to="/ajouter-des-options" color="primary" block>Ajouter des options</v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script setup>
 import HeaderAdmin from "@/components/HeaderAdmin.vue";
-import StatsGen from "@/components/StatsGen.vue";
 </script>
 
 <style scoped>
