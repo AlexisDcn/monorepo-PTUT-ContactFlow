@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ProspectForm from "@/components/ProspectForm.vue";
+import ChoixFormu from "@/components/ChoixFormu.vue";
 
 
 const router = createRouter({
@@ -8,7 +8,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: ()=> import('../views/HomeView.vue')
+      component: ChoixFormu,
+    },
+    {
+      path: '/formulaire/:idSalon',
+      name:'form',
+      component: () => import('../views/FormulaireView/[id].vue'),
     },
     {
       path: '/admin',

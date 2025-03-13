@@ -47,10 +47,13 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, defineProps } from 'vue'
 // Importer la fonction doAjaxRequest qui gère les erreurs d'API
 import doAjaxRequest from '@/util/util.js'
 
+
+// Récupère le props du salon
+const props = defineProps(["idSalon"]);
 // Pour réinitialiser le formulaire
 // const prospectVide = {
 //   nom: '',
@@ -65,7 +68,7 @@ import doAjaxRequest from '@/util/util.js'
 // Les données du composant
 let data = reactive({
   // Les données saisies dans le formulaire
-  formulaire: {salon : 1},
+  formulaire: { salon: `/api/salons/${parseInt(props.idSalon)}` },
   prospects: [],
   champs: [],
 })
@@ -87,6 +90,7 @@ function ajouteProspect() {
   doAjaxRequest('/api/prospects', options)
     .then((result) => {
       console.log('Prospect ajouté :', result)
+      getProspect()
       // Réinitialiser le formulaire
       // data.formulaire = { }
       // refresh() // Rafraîchir la liste des pays
@@ -116,7 +120,6 @@ function getChamp() {
           data.formulaire[elmnt.nom] =""
         }
       }
-
     })
     .catch((error) => alert(error.message))
 }
