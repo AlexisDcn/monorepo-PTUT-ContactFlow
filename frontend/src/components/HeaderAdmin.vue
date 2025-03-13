@@ -2,8 +2,8 @@
   <v-app-bar app color="1" class="custom-header white--text">
     <!-- Logo -->
     <v-img
-      src="@/assets/logo-ISIS-vertical-BLANC.svg"
-      max-height="40"
+      src="src/assets/logo-ISIS-horizontal-BLANC.png"
+      max-height="70"
       max-width="150"
       contain
       @click="$router.push('/')"
@@ -33,4 +33,5 @@ useRouter();
   left: 80%;
   top: 30%;
 }
+
 </style>
