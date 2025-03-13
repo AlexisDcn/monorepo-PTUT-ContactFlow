@@ -1,6 +1,7 @@
 <template>
+  <v-btn @click="retourAccueil" color="4" class="mb-4">Retour</v-btn>
   <v-container class="container fill-height">
-    <v-btn @click="retourAccueil" color="secondary" class="mb-4">Retour</v-btn>
+
     <v-data-table :headers="headers" :items="data.prospects" item-value="idProspect">
       <template v-slot:item="{ item }">
         <tr>
@@ -73,7 +74,7 @@ onMounted(getProspect);
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px #5f4e9b;
   overflow-x: auto;
 }
 
