@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import StatGenView from "@/views/StatGenView.vue";
-import HomeView from "@/views/HomeView.vue";
+import ChoixFormu from "@/views/ChoixFormu.vue";
 import AdminView from "@/views/AdminView.vue";
 import GraphiqueEvolutifView from "@/views/GraphiqueEvolutifView.vue";
 import AjouterDesOptionsView from "@/views/AjouterDesOptionsView.vue";
@@ -10,8 +10,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
+      name: 'choixform',
+      component: ChoixFormu,
     },
     {
       path: '/formulaire/:idSalon',

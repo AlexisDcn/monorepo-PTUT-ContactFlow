@@ -16,6 +16,7 @@ public class ContientService {
         this.contientDao = contientDao;
     }
 
+    // Récupère la liste des champs suite à la route pour récup tous les champs d'un formulaire idForm
     @Transactional
     public List<Champ> champsFormu(Integer idForm) {
         return contientDao.champsFormu(idForm);

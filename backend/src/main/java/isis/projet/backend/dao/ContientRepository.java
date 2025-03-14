@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface ContientRepository extends JpaRepository<Contient, Integer> {
 
+    // Requête SQL sélectionnant tous les champs liés au formulaire idForm
     @Query("SELECT c FROM Champ c INNER JOIN Contient co ON c.idChamp = co.champ.idChamp " +
             " WHERE co.formulaire.idForm = :idForm")
     List<Champ> champsFormu(Integer idForm);

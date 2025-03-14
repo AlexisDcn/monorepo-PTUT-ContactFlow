@@ -41,11 +41,15 @@ public class SimpleController {
         return Map.of("combien", countryService.combienDePays());
     }
 
+    // Route qui permet de récupérer tous les formulaires actifs
+
     @GetMapping("/formulairesActifs")
     public Map<String, List<Formulaire>> formulairesActifs() {
         log.info("Service formulairesActifs");
         return Map.of("formulaire", formulaireService.formulairesActifs());
     }
+
+    // Route qui permet de récupérer tous les champs appartenant à un formulaire x passé en paramètre
 
     @GetMapping("/getChampFormu/{idForm}")
     public Map<String, List<Champ>> getChampFormu(@PathVariable("idForm") Integer idForm) {
