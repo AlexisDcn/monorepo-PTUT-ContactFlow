@@ -31,7 +31,8 @@ ALTER TABLE Salon ALTER COLUMN id_salon RESTART WITH 4;
 INSERT INTO Prospect(id_prospect, nom, prenom, num_tel, mail, ville, departement, code_postal, id_salon) VALUES
                                                                                                              (1, 'Dupont', 'Jean', '0612345678', 'jean.dupont@mail.com', 'Paris', '75', '75001', 1),
                                                                                                              (2, 'Martin', 'Sophie', '0623456789', 'sophie.martin@mail.com', 'Lyon', '69', '69002', 2),
-                                                                                                             (3, 'Lefevre', 'Paul', '0634567890', 'paul.lefevre@mail.com', 'Marseille', '13', '13003', 3);
+                                                                                                             (3, 'Lefevre', 'Paul', '0634567890', 'paul.lefevre@mail.com', 'Marseille', '13', '13003', 3),
+                                                                                                             (4, 'Lesca', 'Tauarii', '0634567899', 'tawi.lesca@gmail.com', 'Pepeete', '974', '97400', 1);
 
 ALTER TABLE Prospect ALTER COLUMN id_prospect RESTART WITH 4;
 

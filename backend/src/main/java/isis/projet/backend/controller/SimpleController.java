@@ -2,10 +2,8 @@ package isis.projet.backend.controller;
 
 import isis.projet.backend.entity.Champ;
 import isis.projet.backend.entity.Formulaire;
-import isis.projet.backend.service.ChampService;
-import isis.projet.backend.service.ContientService;
-import isis.projet.backend.service.CountryService;
-import isis.projet.backend.service.FormulaireService;
+import isis.projet.backend.entity.Salon;
+import isis.projet.backend.service.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +19,15 @@ public class SimpleController {
     private final CountryService countryService;
     private final FormulaireService formulaireService;
     private final ContientService contientService;
+    private final ProspectService prospectService;
+    private final SalonService salonService;
 
-    public SimpleController(CountryService countryService, FormulaireService formulaireService, ContientService contientService) {
+    public SimpleController(CountryService countryService, FormulaireService formulaireService, ContientService contientService, ProspectService prospectService, SalonService salonService) {
         this.countryService = countryService;
         this.formulaireService = formulaireService;
         this.contientService = contientService;
+        this.prospectService = prospectService;
+        this.salonService = salonService;
     }
 
     @GetMapping("/hello")
@@ -55,6 +57,25 @@ public class SimpleController {
     public Map<String, List<Champ>> getChampFormu(@PathVariable("idForm") Integer idForm) {
         log.info("Service getChampFormu, idForm = " + idForm);
         return Map.of("champs", contientService.champsFormu(idForm));
+    }
+
+    // Route qui permet de récupérer le nombre de personnes par un salon spécifié
+
+    @GetMapping("/getCountSalon/{idSalon}")
+    public Map<String, Integer> getCountSalon(@PathVariable("idSalon") Integer idSalon) {
+        log.info("Service getCountSalon" + idSalon);
+        return Map.of("Salon", prospectService.prospectSalon(idSalon));
+    }
+
+    // Route qui permet de récupérer le nombre de personnes par salon (en prenant tous les salons)
+
+    @GetMapping("/getCountSalon")
+    // La on va redonner un JSON qui a pour nom Salon dans lequel est stocké un dictionnaire
+    // Le dictionnaire ressemble à "Salon_id" : nb_Personnes
+    public Map<String, Map<String, Integer>> getCountSalon() {
+        log.info("Service getCountSalon");
+        List<Salon> salons = salonService.getSalon();
+        return Map.of("Salon", prospectService.prospectSalonGlobal(salons));
     }
 }
 
