@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import StatGenView from "@/views/StatGenView.vue";
+import AdminStatistiquesGeneView from "@/views/AdminStatistiquesGeneView.vue";
 import ChoixFormuView from "@/views/ChoixFormuView.vue";
-import AdminView from "@/views/AdminView.vue";
-import GraphiqueEvolutifView from "@/views/GraphiqueEvolutifView.vue";
-import AjouterDesOptionsView from "@/views/AjouterDesOptionsView.vue";
+import AdminAccueilView from "@/views/AdminAccueilView.vue";
+import AdminGraphiqueEvolutifView from "@/views/AdminGraphiqueEvolutifView.vue";
+import AdminOptionsFormuView from "@/views/AdminOptionsFormuView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,22 +21,22 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'admin',
-      component: AdminView,
+      component: AdminAccueilView,
     },
     {
       path: '/statistiques-generales',
       name: 'statistiques-generales',
-      component: StatGenView,
+      component: AdminStatistiquesGeneView,
     },
     {
       path: '/graphique-evolutif',
       name: 'graphique-evolutif',
-      component: GraphiqueEvolutifView,
+      component: AdminGraphiqueEvolutifView,
     },
     {
       path: '/ajouter-des-options',
       name: 'ajouter-des-options',
-      component: AjouterDesOptionsView,
+      component: AdminOptionsFormuView,
     },
   ],
 })
