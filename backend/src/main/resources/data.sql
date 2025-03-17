@@ -48,7 +48,13 @@ INSERT INTO Suivie(id_prospect, id) VALUES
 
 INSERT INTO Contient(id_champ, id_form) VALUES
                                             (1, 1),
+                                            (2,1),
+                                            (3,1),
+                                            (1,2),
                                             (2, 2),
+                                            (3,2),
+                                            (1,3),
+                                            (2,3),
                                             (3, 3);
 
 INSERT INTO Info(id_prospect, id_champ, valeur_txt, valeur_num) VALUES

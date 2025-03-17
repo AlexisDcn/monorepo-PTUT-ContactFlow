@@ -2,13 +2,12 @@
   <div class="container">
     <!-- Création dynamique du Formulaire d'ajout de prospect -->
     <div>
-
-      <form @submit.prevent="ajouteProspect">
-      <input v-for="champ in data.champs"
+      <form class="form" @submit.prevent="ajouteProspect">
+      <input class="champ" v-for="champ in data.champs"
              v-model="data.formulaire[champ.nom]"
              :type="champ.type" :placeholder="champ.placeholders"
       />
-        <button type="submit">Ajouter</button>
+        <button class="bouton" type="submit">Ajouter</button>
       </form>
     </div>
   </div>
@@ -83,14 +82,54 @@ function getChampFormu(idForm) {
     .catch((error) => alert(error.message))
 }
 
+function getFormInfo(idForm){
+  doAjaxRequest(`/api/formulaires/${idForm}`)
+    .then((result) => {
+     console.log(result);
+    })
+    .catch((error) => alert(error.message))
+}
+
 // Appeler la fonction refresh() pour récupérer la liste des pays au chargement du composant
 onMounted(() => {
   getProspect()
   getChampFormu(parseInt(props.idSalon))
+  console.log(props)
 })
 </script>
 
 <!-- Un CSS pour ce composant -->
 <style scoped>
+.container {
+  align-items: center;
+  justify-content: center;
+  margin: 10% auto auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espacement entre les champs */
+  width: 300px; /* Ajuste la largeur si nécessaire */
+}
+
+.champ {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.bouton {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bouton:hover {
+  background-color: #0056b3;
+}
 
 </style>
