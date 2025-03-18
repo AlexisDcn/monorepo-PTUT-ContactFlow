@@ -2,18 +2,6 @@
   <v-container class="container fill-height">
     <CsvDownloader :data="data.prospects" :headers="headers" />
     <v-data-table :headers="headers" :items="data.prospects" item-value="idProspect">
-      <template v-slot:item="{ item }">
-        <tr>
-          <td>{{ item.idProspect }}</td>
-          <td>{{ item.nom }}</td>
-          <td>{{ item.prenom }}</td>
-          <td>{{ item.numTel }}</td>
-          <td>{{ item.mail }}</td>
-          <td>{{ item.ville }}</td>
-          <td>{{ item.departement }}</td>
-          <td>{{ item.codePostal }}</td>
-        </tr>
-      </template>
     </v-data-table>
   </v-container>
 </template>
@@ -54,6 +42,7 @@ function getProspect() {
   doAjaxRequest("/api/prospects")
     .then((result) => {
       data.prospects = result._embedded.prospects;
+      console.log(data.prospects)
     })
     .catch((error) => alert(error.message));
 }
