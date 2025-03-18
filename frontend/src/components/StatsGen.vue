@@ -1,7 +1,10 @@
 <template>
   <v-container class="container fill-height">
     <CsvDownloader :data="data.prospects" :headers="headers" />
-    <v-data-table :items="data.prospects">
+    <v-data-table :items="data.prospects" :footer-props="{
+    itemsPerPageOptions: [5, 10, 15, 20],
+    itemsPerPageText: 'Prospects par page :'
+  }">
     </v-data-table>
   </v-container>
 </template>
@@ -69,4 +72,41 @@ onMounted(getProspect);
 .fill-height {
   height: 100%;
 }
+
+::v-deep(.v-data-table) {
+  background-color: #5F4E9B; /* Fond violet */
+  border-radius: 15px; /* Coins arrondis */
+  padding: 20px; /* Espacement intérieur */
+}
+
+::v-deep(.v-data-table-header) {
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+::v-deep(.v-data-table td) {
+  background-color: white; /* Fond blanc */
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 14px;
+  border: none;
+}
+::v-deep(.v-data-table tbody tr) {
+  border-bottom: none;
+}
+
+::v-deep(.v-data-table-footer) {
+  background-color: #5F4E9B;
+  color: white;
+}
+::v-deep(.v-data-table thead th) {
+  color: white !important;
+  font-weight: bold;
+  text-align: left;
+}
+
+
+
+
 </style>
