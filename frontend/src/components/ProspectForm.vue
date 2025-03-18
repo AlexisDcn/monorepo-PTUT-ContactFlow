@@ -17,6 +17,7 @@
 import { onMounted, reactive, defineProps } from 'vue'
 // Importer la fonction doAjaxRequest qui gère les erreurs d'API
 import doAjaxRequest from '@/util/util.js'
+import router from "@/router/index.js";
 
 
 // Récupère le props du salon
@@ -49,6 +50,7 @@ function ajouteProspect() {
     .then((result) => {
       console.log('Prospect ajouté :', result)
       getProspect()
+      router.push('/formulaire-valide');
       // Réinitialiser le formulaire
       // data.formulaire = { }
       // refresh() // Rafraîchir la liste des pays

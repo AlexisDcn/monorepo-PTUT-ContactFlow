@@ -1,4 +1,5 @@
 <template>
+  <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
   <v-container>
     <HeaderAdmin />
     <h1>Graphique évolutif</h1>
@@ -10,6 +11,7 @@
 import HeaderAdmin from "@/components/HeaderAdmin.vue";
 import VueApexCharts from "vue3-apexcharts";
 import {reactive} from "vue";
+import router from "@/router/index.js";
 
 const dataRecup = reactive([]);
 
@@ -31,5 +33,9 @@ function getPersonneParSalon(){
 
 function getSalon(){
 
+}
+
+function boutonRetour() {
+  router.back();
 }
 </script>

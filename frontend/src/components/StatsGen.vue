@@ -1,5 +1,5 @@
 <template>
-  <v-btn @click="retourAccueilAdmin" color="4" class="mb-4">Retour</v-btn>
+  <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
   <v-container class="container fill-height">
 
     <v-data-table :headers="headers" :items="data.prospects" item-value="idProspect">
@@ -52,8 +52,8 @@ const headers = [
 
 const router = useRouter();
 
-function retourAccueilAdmin() {
-  router.push('/admin');
+function boutonRetour() {
+  router.back();
 }
 
 function getProspect() {
