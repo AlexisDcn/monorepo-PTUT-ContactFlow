@@ -1,7 +1,7 @@
 <template>
   <v-container class="container fill-height">
     <CsvDownloader :data="data.prospects" :headers="headers" />
-    <v-data-table :headers="headers" :items="data.prospects" item-value="idProspect">
+    <v-data-table :items="data.prospects">
     </v-data-table>
   </v-container>
 </template>
@@ -41,11 +41,16 @@ const headers = [
 function getProspect() {
   doAjaxRequest("/api/prospects")
     .then((result) => {
-      data.prospects = result._embedded.prospects;
-      console.log(data.prospects)
+      // Filtrer les données pour exclure la propriété _links
+      data.prospects = result._embedded.prospects.map(prospect => {
+        const { _links, ...rest } = prospect;
+        return rest;
+      });
+      console.log(data.prospects);
     })
     .catch((error) => alert(error.message));
 }
+
 
 onMounted(getProspect);
 </script>
