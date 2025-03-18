@@ -1,7 +1,6 @@
 <template>
-  <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
   <v-container class="container fill-height">
-
+    <CsvDownloader :data="data.prospects" :headers="headers" />
     <v-data-table :headers="headers" :items="data.prospects" item-value="idProspect">
       <template v-slot:item="{ item }">
         <tr>
@@ -22,7 +21,7 @@
 <script setup>
 import { onMounted, reactive } from "vue";
 import doAjaxRequest from "@/util/util.js";
-import { useRouter } from 'vue-router';
+import CsvDownloader from "@/components/CsvDownloader.vue";
 
 const prospectVide = {
   nom: "",
@@ -50,11 +49,6 @@ const headers = [
   { text: 'Code Postal', value: 'codePostal' },
 ];
 
-const router = useRouter();
-
-function boutonRetour() {
-  router.back();
-}
 
 function getProspect() {
   doAjaxRequest("/api/prospects")
