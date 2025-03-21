@@ -75,7 +75,7 @@ public class SimpleController {
     public Map<String, Map<String, Integer>> getCountSalon() {
         log.info("Service getCountSalon");
         List<Salon> salons = salonService.getSalon();
-        return Map.of("Salon", prospectService.prospectSalonGlobal(salons));
+        return Map.of("salon", prospectService.prospectSalonGlobal(salons));
     }
 }
 
