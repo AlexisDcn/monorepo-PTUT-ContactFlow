@@ -4,6 +4,7 @@ import ChoixFormuView from "@/views/ChoixFormuView.vue";
 import AdminAccueilView from "@/views/AdminAccueilView.vue";
 import AdminGraphiqueEvolutifView from "@/views/AdminGraphiqueEvolutifView.vue";
 import AdminOptionsFormuView from "@/views/AdminOptionsFormuView.vue";
+import FormuValidView from "@/views/FormuValidView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,11 @@ const router = createRouter({
       path: '/ajouter-des-options',
       name: 'ajouter-des-options',
       component: AdminOptionsFormuView,
+    },
+    {
+      path: '/formulaire-valide',
+      name: 'formulaire-valide',
+      component: FormuValidView,
     },
   ],
 })

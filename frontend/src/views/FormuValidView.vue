@@ -1,11 +1,18 @@
-<script setup>
-
-</script>
-
 <template>
-
+  <v-container class="fill-height">
+    <HeaderAdmin />
+    <FormulaireValide />
+  </v-container>
 </template>
 
-<style scoped>
+<script setup>
+import HeaderAdmin from "@/components/HeaderAdmin.vue";
+import FormulaireValide from "@/components/FormulaireValide.vue";
+</script>
 
+<style scoped>
+.fill-height {
+  min-height: calc(100vh - 64px); /* Ajuste la hauteur en tenant compte du footer */
+  padding: 16px;
+}
 </style>

@@ -1,4 +1,5 @@
 <template>
+  <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
   <v-container>
     <HeaderAdmin />
     <h1>Ajouter des options</h1>
@@ -7,4 +8,8 @@
 
 <script setup>
 import HeaderAdmin from "@/components/HeaderAdmin.vue";
+import router from "@/router/index.js";
+function boutonRetour() {
+  router.back();
+}
 </script>

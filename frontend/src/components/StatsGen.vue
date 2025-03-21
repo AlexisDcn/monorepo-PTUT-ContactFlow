@@ -1,20 +1,10 @@
 <template>
-  <v-btn @click="retourAccueilAdmin" color="4" class="mb-4">Retour</v-btn>
   <v-container class="container fill-height">
-
-    <v-data-table :headers="headers" :items="data.prospects" item-value="idProspect">
-      <template v-slot:item="{ item }">
-        <tr>
-          <td>{{ item.idProspect }}</td>
-          <td>{{ item.nom }}</td>
-          <td>{{ item.prenom }}</td>
-          <td>{{ item.numTel }}</td>
-          <td>{{ item.mail }}</td>
-          <td>{{ item.ville }}</td>
-          <td>{{ item.departement }}</td>
-          <td>{{ item.codePostal }}</td>
-        </tr>
-      </template>
+    <CsvDownloader :data="data.prospects" :headers="headers" />
+    <v-data-table :items="data.prospects" :footer-props="{
+    itemsPerPageOptions: [5, 10, 15, 20],
+    itemsPerPageText: 'Prospects par page :'
+  }">
     </v-data-table>
   </v-container>
 </template>
@@ -22,7 +12,7 @@
 <script setup>
 import { onMounted, reactive } from "vue";
 import doAjaxRequest from "@/util/util.js";
-import { useRouter } from 'vue-router';
+import CsvDownloader from "@/components/CsvDownloader.vue";
 
 const prospectVide = {
   nom: "",
@@ -50,19 +40,20 @@ const headers = [
   { text: 'Code Postal', value: 'codePostal' },
 ];
 
-const router = useRouter();
-
-function retourAccueilAdmin() {
-  router.push('/admin');
-}
 
 function getProspect() {
   doAjaxRequest("/api/prospects")
     .then((result) => {
-      data.prospects = result._embedded.prospects;
+      // Filtrer les données pour exclure la propriété _links
+      data.prospects = result._embedded.prospects.map(prospect => {
+        const { _links, ...rest } = prospect;
+        return rest;
+      });
+      console.log(data.prospects);
     })
     .catch((error) => alert(error.message));
 }
+
 
 onMounted(getProspect);
 </script>
@@ -81,4 +72,41 @@ onMounted(getProspect);
 .fill-height {
   height: 100%;
 }
+
+::v-deep(.v-data-table) {
+  background-color: #5F4E9B; /* Fond violet */
+  border-radius: 15px; /* Coins arrondis */
+  padding: 20px; /* Espacement intérieur */
+}
+
+::v-deep(.v-data-table-header) {
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+::v-deep(.v-data-table td) {
+  background-color: white; /* Fond blanc */
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 14px;
+  border: none;
+}
+::v-deep(.v-data-table tbody tr) {
+  border-bottom: none;
+}
+
+::v-deep(.v-data-table-footer) {
+  background-color: #5F4E9B;
+  color: white;
+}
+::v-deep(.v-data-table thead th) {
+  color: white !important;
+  font-weight: bold;
+  text-align: left;
+}
+
+
+
+
 </style>

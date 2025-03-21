@@ -1,4 +1,5 @@
 <template>
+  <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
   <v-container>
     <HeaderAdmin />
     <h1>Graphique évolutif</h1>
@@ -25,6 +26,7 @@ import VueApexCharts from "vue3-apexcharts";
 import {onMounted, reactive, ref, watch} from "vue";
 import doAjaxRequest from "@/util/util.js";
 import {el} from "vuetify/locale";
+import router from "@/router/index.js";
 
 const dataRecup = reactive([]);
 const nameList = reactive([]);
@@ -79,6 +81,10 @@ async function getSalonName(idSalon){
     .then((result) => {
       return result.nom
     })
+}
+
+function boutonRetour() {
+  router.back();
 }
 
 async function handleClick(idRecup) {
