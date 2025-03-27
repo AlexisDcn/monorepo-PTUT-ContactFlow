@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height text-center">
-    <HeaderAdmin />
+
     <v-row justify="center" align="center" class="mt-16">
       <v-col cols="4">
         <v-btn to="/graphique-evolutif" color="primary" block>Graphique évolutif</v-btn>

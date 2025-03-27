@@ -11,7 +11,6 @@ function boutonRetour() {
 
 <template>
  <v-container>
-   <HeaderAdmin />
    <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
    <StatsGen />
  </v-container>

@@ -1,12 +1,10 @@
 <template>
   <v-container class="fill-height">
-    <HeaderAdmin />
     <FormulaireValide />
   </v-container>
 </template>
 
 <script setup>
-import HeaderAdmin from "@/components/HeaderAdmin.vue";
 import FormulaireValide from "@/components/FormulaireValide.vue";
 </script>
 
