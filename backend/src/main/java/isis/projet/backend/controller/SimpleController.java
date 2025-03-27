@@ -77,6 +77,12 @@ public class SimpleController {
         List<Salon> salons = salonService.getSalon();
         return Map.of("salon", prospectService.prospectSalonGlobal(salons));
     }
+
+    @GetMapping("/getPersParAnnee")
+    public Map<String, Map<String, Integer>> getPersParAnnee() {
+        log.info("Service getPersParAnnee");
+        return Map.of("salon", prospectService.prospectAnnee());
+    }
 }
 
 

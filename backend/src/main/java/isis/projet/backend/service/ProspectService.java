@@ -31,4 +31,18 @@ public class ProspectService {
         return map;
     }
 
+    @Transactional
+    public Map<String, Integer> prospectAnnee() {
+        List<Object[]> results = prospectDao.countProspectsByYear();
+        Map<String, Integer> data = new HashMap<>();
+
+        for (Object[] row : results) {
+            String annee = String.valueOf(row[0]); // Récup l'année
+            Integer count = ((Number) row[1]).intValue(); // Récup le nb de pers
+            data.put(annee, count);
+        }
+
+        return data;
+    }
+
 }

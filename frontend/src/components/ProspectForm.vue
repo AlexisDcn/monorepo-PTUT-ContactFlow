@@ -33,11 +33,8 @@ let data = reactive({
 })
 
 function ajouteProspect() {
-  // Ajouter un pays avec les données du formulaire
   const options = {
-    // Options de la requête fetch
-    method: 'POST', // Verbe HTTP POST pour ajouter un enregistrement
-    // On transmet les données du formulaire dans le corps de la requête
+    method: 'POST',
     body: JSON.stringify(data.formulaire),
     headers: {
       'Content-Type': 'application/json',
@@ -51,9 +48,6 @@ function ajouteProspect() {
       console.log('Prospect ajouté :', result)
       getProspect()
       router.push('/formulaire-valide');
-      // Réinitialiser le formulaire
-      // data.formulaire = { }
-      // refresh() // Rafraîchir la liste des pays
     })
     .catch((error) => alert(error.message))
 }
