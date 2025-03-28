@@ -1,6 +1,7 @@
 package isis.projet.backend.service;
 
 import isis.projet.backend.dao.ProspectRepository;
+import isis.projet.backend.entity.Prospect;
 import isis.projet.backend.entity.Salon;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -45,4 +46,12 @@ public class ProspectService {
         return data;
     }
 
+    @Transactional
+    public Map<String, List<Prospect>> prospectSalon(List<Salon> salons) {
+        Map<String, List<Prospect>> map = new HashMap<>();
+        for (Salon salon : salons) {
+            map.put(salon.getNom(), prospectDao.prospectSalonNom(salon.getIdSalon()));
+        }
+        return map;
+    }
 }
