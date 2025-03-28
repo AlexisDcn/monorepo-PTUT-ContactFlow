@@ -8,7 +8,6 @@ import ProspectForm from "/src/components/ProspectForm.vue";
 // useRoute permet de récupérer la route
 import { useRoute } from "vue-router";
 import router from "@/router/index.js";
-import HeaderAdmin from "@/components/HeaderAdmin.vue";
 const route = useRoute();
 const idSalon = route.params.idSalon;
 

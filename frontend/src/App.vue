@@ -2,8 +2,8 @@
   <v-app>
     <v-main>
       <router-view />
+      <FooterGeneral />
     </v-main>
-    <FooterGeneral />
   </v-app>
 </template>
 
