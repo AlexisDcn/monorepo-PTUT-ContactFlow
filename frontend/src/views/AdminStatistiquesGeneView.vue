@@ -1,8 +1,8 @@
 <script setup>
 
-import HeaderAdmin from "@/components/HeaderAdmin.vue";
 import StatsGen from "@/components/StatsGen.vue";
 import router from "@/router/index.js";
+import AdminHeader from "@/components/AdminHeader.vue";
 
 function boutonRetour() {
   router.back();
@@ -10,6 +10,7 @@ function boutonRetour() {
 </script>
 
 <template>
+  <AdminHeader />
  <v-container>
    <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
    <StatsGen />

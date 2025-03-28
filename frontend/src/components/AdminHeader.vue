@@ -20,7 +20,7 @@ function logout() {
   // Logique de déconnexion
   console.log('Déconnexion...');
   // Rediriger vers la page de connexion ou une autre page après la déconnexion
-  router.push('/login');
+  router.push('/');
 }
 function goHome() {
   router.push('/');

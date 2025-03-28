@@ -1,10 +1,8 @@
 <script setup>
 
-import HeaderAdmin from "@/components/HeaderAdmin.vue";
-import VueApexCharts from "vue3-apexcharts";
+
 import {onMounted, reactive, ref, watch} from "vue";
 import doAjaxRequest from "@/util/util.js";
-import router from "@/router/index.js";
 
 function debut(){
   doAjaxRequest('/rest/getPersParAnnee')

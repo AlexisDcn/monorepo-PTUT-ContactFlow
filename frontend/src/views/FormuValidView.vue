@@ -1,4 +1,5 @@
 <template>
+  <MainHeader />
   <v-container class="fill-height">
     <FormulaireValide />
   </v-container>
@@ -6,6 +7,7 @@
 
 <script setup>
 import FormulaireValide from "@/components/FormulaireValide.vue";
+import MainHeader from "@/components/MainHeader.vue";
 </script>
 
 <style scoped>

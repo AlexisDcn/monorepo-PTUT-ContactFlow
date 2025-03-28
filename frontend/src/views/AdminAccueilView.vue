@@ -1,4 +1,5 @@
 <template>
+  <AdminHeader />
   <v-container class="fill-height text-center">
 
     <v-row justify="center" align="center" class="mt-16">
@@ -16,7 +17,7 @@
 </template>
 
 <script setup>
-import HeaderAdmin from "@/components/HeaderAdmin.vue";
+import AdminHeader from "@/components/AdminHeader.vue";
 </script>
 
 <style scoped>
