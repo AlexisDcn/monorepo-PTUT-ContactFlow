@@ -75,7 +75,7 @@ function removeChamp(sectionIndex, champIndex) {
 function saveForm() {
   const formulaireData = {
     actif: true, // Par défaut, le formulaire est actif
-    salon: "1", // Remplacez par l'identifiant du salon approprié
+    salon: "/api/salons/1",
     champs: formSections.value.flatMap(section =>
       section.champs.map(champ => ({
         nom: champ.nom,

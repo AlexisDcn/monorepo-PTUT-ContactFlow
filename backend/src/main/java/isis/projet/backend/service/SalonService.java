@@ -17,4 +17,8 @@ public class SalonService {
         return salonDao.getSalon();
     }
 
+    public void deleteSalon(Integer salon) {
+//        salonDao.deleteSalon();
+    }
+
 }

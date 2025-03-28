@@ -8,4 +8,5 @@ import java.util.List;
 public interface SalonRepository extends JpaRepository<Salon, Integer> {
     @Query("SELECT s FROM Salon s")
     List<Salon> getSalon();
+
 }

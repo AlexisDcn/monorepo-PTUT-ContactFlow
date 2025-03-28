@@ -83,6 +83,11 @@ public class SimpleController {
         log.info("Service getPersParAnnee");
         return Map.of("salon", prospectService.prospectAnnee());
     }
+
+    @DeleteMapping("/deleteSalon/{idSalon}")
+    public void deleteSalon(@PathVariable("idSalon") Integer idSalon) {
+        salonService.deleteSalon(idSalon);
+    }
 }
 
 
