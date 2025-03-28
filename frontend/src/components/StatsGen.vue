@@ -55,7 +55,6 @@ const prospectVide = {
 };
 
 let data = reactive({
-  formulaire: { ...prospectVide },
   prospects: [],
 });
 
@@ -103,7 +102,7 @@ function sortBy(key) {
   }
 }
 
-function getProspect() {
+/*function getProspect() {
   doAjaxRequest("/api/prospects")
     .then((result) => {
       // Filtrer les données pour exclure la propriété _links
@@ -115,6 +114,40 @@ function getProspect() {
     })
     .catch((error) => alert(error.message));
 }
+*/
+
+function getProspects(){
+  doAjaxRequest('/rest/getProspectsSalon')
+    .then((result) => {
+      // Itération sur le dictionnaire de base (Salon : {Dico})
+      for (const [clefDicoGen, dicoSecondaire] of Object.entries(result)) {
+        console.log(clefDicoGen, dicoSecondaire);
+        // Itération sur le dico contenant les valeurs
+        for (const [salonNom, prospectList] of Object.entries(dicoSecondaire)) {
+          console.log(salonNom);
+          console.log(prospectList[0]);
+          for (let prospect of prospectList) {
+            console.log(prospect);
+            data.prospects.push(prospect);
+          }
+
+          console.log(data.prospects);
+        }
+      }
+    })
+    .catch((error) => alert(error.message))
+}
+
+async function getProspectsSpe(idSalon){
+  return doAjaxRequest(`/rest/getProspectsSalon/${idSalon}`)
+    .then((result) =>{
+      console.log("blabla",result.type);
+      return result
+    })
+    .catch((error) => alert(error.message))
+}
+
+
 
 function getSalon() {
   doAjaxRequest('/api/salons')
@@ -134,7 +167,8 @@ function handleCheckboxChange() {
 
 onMounted(() => {
   getSalon();
-  getProspect();
+  getProspects();
+  getProspectsSpe(1);
 });
 </script>
 

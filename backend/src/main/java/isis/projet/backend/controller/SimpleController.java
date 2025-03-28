@@ -2,6 +2,7 @@ package isis.projet.backend.controller;
 
 import isis.projet.backend.entity.Champ;
 import isis.projet.backend.entity.Formulaire;
+import isis.projet.backend.entity.Prospect;
 import isis.projet.backend.entity.Salon;
 import isis.projet.backend.service.*;
 import org.springframework.http.ResponseEntity;
@@ -93,6 +94,15 @@ public class SimpleController {
     public Map<String, Integer> getProspectsSalon(@PathVariable("idSalon") Integer idSalon) {
         log.info("Service getProspectsSalon" + idSalon);
         return Map.of("Salon", prospectService.prospectSalon(idSalon));
+    }
+
+    @GetMapping("/getProspectsSalon")
+    // La on va redonner un JSON qui a pour nom Salon dans lequel est stocké un dictionnaire
+    // Le dictionnaire ressemble à "Salon_id" : nb_Personnes
+    public Map<String, Map<String, List<Prospect>>> getProspectsSalon() {
+        log.info("Service getProspectsSalon");
+        List<Salon> salons = salonService.getSalon();
+        return Map.of("salon", prospectService.prospectSalonGlobalNom(salons));
     }
 }
 

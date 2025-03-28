@@ -47,7 +47,7 @@ public class ProspectService {
     }
 
     @Transactional
-    public Map<String, List<Prospect>> prospectSalon(List<Salon> salons) {
+    public Map<String, List<Prospect>> prospectSalonGlobalNom(List<Salon> salons) {
         Map<String, List<Prospect>> map = new HashMap<>();
         for (Salon salon : salons) {
             map.put(salon.getNom(), prospectDao.prospectSalonNom(salon.getIdSalon()));
