@@ -1,52 +1,60 @@
 <template>
-  <v-container class="form-builder">
-    <v-row>
-      <v-col>
-        <h2>Créer un nouveau formulaire</h2>
-        <div v-for="(section, index) in formSections" :key="index" class="form-section">
-          <v-subheader>Section {{ index + 1 }}</v-subheader>
-          <v-list>
-            <v-list-item v-for="(champ, champIndex) in section.champs" :key="champIndex">
-              <v-list-item-content>
-                <v-list-item-title>{{ champ.nom }}</v-list-item-title>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-btn icon @click="removeChamp(index, champIndex)">
-                  <v-icon>mdi-delete</v-icon>
-                </v-btn>
-              </v-list-item-action>
-            </v-list-item>
-          </v-list>
-          <v-text-field
-            v-model="newChampName"
-            label="Nom du champ"
-          ></v-text-field>
-          <v-btn @click="addChamp(index)">Ajouter un champ</v-btn>
-          <v-btn @click="removeSection(index)">Supprimer la section</v-btn>
-        </div>
-        <v-btn @click="addSection">Ajouter une section</v-btn>
-        <v-btn @click="saveForm">Enregistrer le formulaire</v-btn>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div class="form-builder">
+    <div class="form-container">
+      <h2>Créer un nouveau formulaire</h2>
+
+      <!-- Ajout du select pour choisir un salon -->
+      <div>
+        <label for="salon-select">Choisissez un salon :</label>
+        <select v-model="selectedSalon" id="salon-select">
+          <option v-for="salon in listSalon" :key="salon.idSalon" :value="salon.idSalon">
+            {{ salon.nom }}
+          </option>
+        </select>
+      </div>
+
+      <div v-for="(section, index) in formSections" :key="index" class="form-section">
+        <h3>Section {{ index + 1 }}</h3>
+        <ul>
+          <li v-for="(champ, champIndex) in section.champs" :key="champIndex" class="champ-item">
+            <span>{{ champ.nom }}</span>
+            <button @click="removeChamp(index, champIndex)">Supprimer</button>
+          </li>
+        </ul>
+        <input
+          v-model="newChampName"
+          type="text"
+          placeholder="Nom du champ"
+        />
+        <button @click="addChamp(index)">Ajouter un champ</button>
+        <button @click="removeSection(index)">Supprimer la section</button>
+      </div>
+      <button @click="addSection">Ajouter une section</button>
+      <button @click="saveForm">Enregistrer le formulaire</button>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import doAjaxRequest from '@/util/util.js';
-import {useRouter} from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const formSections = ref([
   {
     champs: [
-      {nom: 'Nom', type: 'text'},
-      {nom: 'Email', type: 'email'}
+      { nom: 'Nom', type: 'text' },
+      { nom: 'Email', type: 'email' }
     ]
   }
 ]);
 
 const newChampName = ref('');
 const router = useRouter();
+
+// Ajout des variables pour la liste des salons et le salon sélectionné
+const listSalon = reactive([]);
+const selectedSalon = ref(null);
 
 function addSection() {
   formSections.value.push({
@@ -75,7 +83,7 @@ function removeChamp(sectionIndex, champIndex) {
 function saveForm() {
   const formulaireData = {
     actif: true, // Par défaut, le formulaire est actif
-    salon: "/api/salons/1",
+    salon: `/api/salons/${selectedSalon.value}`,
     champs: formSections.value.flatMap(section =>
       section.champs.map(champ => ({
         nom: champ.nom,
@@ -102,6 +110,29 @@ function saveForm() {
     })
     .catch((error) => alert(error.message));
 }
+
+// Ajout de la fonction pour récupérer les salons
+function getSalon() {
+  let premierTour = false;
+  doAjaxRequest('/api/salons')
+    .then((result) => {
+      console.log(result._embedded);
+      for (let elmnt of result._embedded.salons) {
+        if (!premierTour) {
+          selectedSalon.value = elmnt.idSalon;
+          premierTour = true;
+        }
+        listSalon.push(elmnt);
+      }
+      console.log(listSalon);
+    })
+    .catch((error) => alert(error.message));
+}
+
+// Appeler getSalon lors du montage du composant
+onMounted(() => {
+  getSalon();
+});
 </script>
 
 <style scoped>
@@ -112,5 +143,15 @@ function saveForm() {
 
 .form-section {
   margin-bottom: 20px;
+}
+
+.champ-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  margin-top: 10px;
 }
 </style>
