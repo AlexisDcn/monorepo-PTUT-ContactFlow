@@ -15,7 +15,7 @@ public interface SalonRepository extends JpaRepository<Salon, Integer> {
     void deleteSalon(Integer idSalon);
 
     @Modifying
-    @Query("UPDATE Salon s SET s.archive = true WHERE s.idSalon = :idSalon")
+    @Query("UPDATE Salon s SET s.archive = CASE WHEN s.archive = true THEN false ELSE true END WHERE s.idSalon = :idSalon")
     void archiveSalon(Integer idSalon);
 
 }
