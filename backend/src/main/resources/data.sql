@@ -34,7 +34,7 @@ INSERT INTO Prospect(id_prospect, nom, prenom, num_tel, mail, ville, departement
                                                                                                              (3, 'Lefevre', 'Paul', '0634567890', 'paul.lefevre@mail.com', 'Marseille', '13', '13003', 3),
                                                                                                              (4, 'Lesca', 'Tauarii', '0634567899', 'tawi.lesca@gmail.com', 'Pepeete', '974', '97400', 1);
 
-ALTER TABLE Prospect ALTER COLUMN id_prospect RESTART WITH 4;
+ALTER TABLE Prospect ALTER COLUMN id_prospect RESTART WITH 5;
 
 INSERT INTO Formulaire(id_form, actif, id_salon) VALUES
                                                      (1, TRUE, 1),
