@@ -120,6 +120,7 @@ public class SimpleController {
 
     @PutMapping("/archiver/{idSalon}")
     public void archiver(@PathVariable("idSalon") Integer idSalon) {
+        formulaireService.desactiver(idSalon);
         salonService.archiver(idSalon);
     }
 }

@@ -15,4 +15,8 @@ public interface FormulaireRepository extends JpaRepository<Formulaire, Integer>
     @Modifying
     @Query ("DELETE FROM Formulaire f WHERE f.salon.idSalon =:idSalon")
     void deleteFormulaire(Integer idSalon);
+
+    @Modifying
+    @Query ("UPDATE Formulaire f SET f.actif = CASE WHEN f.actif = true THEN false ELSE true END WHERE f.salon.idSalon = :idSalon")
+    void desactiverForm (Integer idSalon);
 }

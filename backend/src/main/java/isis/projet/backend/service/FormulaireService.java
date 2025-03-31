@@ -26,5 +26,10 @@ public class FormulaireService {
         formulaireDao.deleteFormulaire(salon);
     }
 
+    @Transactional
+    public void desactiver(Integer salon) {
+        formulaireDao.desactiverForm(salon);
+    }
+
 }
 

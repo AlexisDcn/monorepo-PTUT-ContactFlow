@@ -23,6 +23,7 @@ function getSalon() {
     .catch((error) => alert(error.message))
 }
 
+// Fonction qui permet l'archivage
 function handleArchivage() {
   console.log(`Salon sélectionné : ${selectedSalon.value}`)
   const options = {
@@ -37,6 +38,7 @@ function handleArchivage() {
     .catch((error) => alert(error.message));
 }
 
+// Fonction qui appelle la suppression des salons
 function handleDelete(){
   if(confirm("Êtes vous sûr de vouloir supprimer ce salon ? Cela va entraîner la suppression de tous les prospects liés à ce salon")){
     deleteSalon(selectedSalon.value)
@@ -44,7 +46,6 @@ function handleDelete(){
 }
 
 // Fonction de delete des salons
-
 function deleteSalon(id) {
   const options = {
     method: 'DELETE',
