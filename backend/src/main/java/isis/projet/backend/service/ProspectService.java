@@ -47,6 +47,12 @@ public class ProspectService {
     }
 
     @Transactional
+    public void deleteProspect(Integer salon) {
+        // Faire en dernier pour respecter la cascade
+        prospectDao.deleteProspect(salon);
+    }
+
+    @Transactional
     public Map<String, List<Prospect>> prospectSalonGlobalNom(List<Salon> salons) {
         Map<String, List<Prospect>> map = new HashMap<>();
         for (Salon salon : salons) {

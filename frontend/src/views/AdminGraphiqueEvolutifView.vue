@@ -1,7 +1,7 @@
 <template>
   <AdminHeader />
   <h1>Choisir son type de graphique</h1>
-<!--  <GraphiqueSalon/>-->
+  <GraphiqueSalon/>
   <GraphiqueAnnees/>
 
 </template>

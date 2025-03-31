@@ -5,11 +5,9 @@ import isis.projet.backend.entity.Formulaire;
 import isis.projet.backend.entity.Prospect;
 import isis.projet.backend.entity.Salon;
 import isis.projet.backend.service.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,13 +20,17 @@ public class SimpleController {
     private final ContientService contientService;
     private final ProspectService prospectService;
     private final SalonService salonService;
+    private final InfoService infoService;
+    private final SuivieService suivieService;
 
-    public SimpleController(CountryService countryService, FormulaireService formulaireService, ContientService contientService, ProspectService prospectService, SalonService salonService) {
+    public SimpleController(CountryService countryService, FormulaireService formulaireService, ContientService contientService, ProspectService prospectService, SalonService salonService, InfoService infoService, SuivieService suivieService) {
         this.countryService = countryService;
         this.formulaireService = formulaireService;
         this.contientService = contientService;
         this.prospectService = prospectService;
         this.salonService = salonService;
+        this.infoService = infoService;
+        this.suivieService = suivieService;
     }
 
     @GetMapping("/hello")
@@ -87,6 +89,17 @@ public class SimpleController {
 
     @DeleteMapping("/deleteSalon/{idSalon}")
     public void deleteSalon(@PathVariable("idSalon") Integer idSalon) {
+
+        // Suppression de tout ce qui concerne les liaisons
+        infoService.deleteInfo(idSalon);
+        suivieService.deleteSuivi(idSalon);
+        contientService.deleteContient(idSalon);
+
+        // Supprime tous les trucs physiques
+        formulaireService.deleteFormulaire(idSalon);
+        prospectService.deleteProspect(idSalon);
+
+        // Enfin, suppression du salon :)
         salonService.deleteSalon(idSalon);
     }
 
@@ -103,6 +116,11 @@ public class SimpleController {
         log.info("Service getProspectsSalon");
         List<Salon> salons = salonService.getSalon();
         return Map.of("salon", prospectService.prospectSalonGlobalNom(salons));
+    }
+
+    @PutMapping("/archiver/{idSalon}")
+    public void archiver(@PathVariable("idSalon") Integer idSalon) {
+        salonService.archiver(idSalon);
     }
 }
 

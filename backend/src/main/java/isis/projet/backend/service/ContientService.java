@@ -22,5 +22,12 @@ public class ContientService {
         return contientDao.champsFormu(idForm);
     }
 
+    @Transactional
+    public void deleteContient(Integer salon) {
+        // Faire en premier pour respecter la cascade
+        contientDao.deleteContient(salon);
+    }
+
+
 }
 

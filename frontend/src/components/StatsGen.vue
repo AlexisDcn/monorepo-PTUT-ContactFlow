@@ -46,16 +46,6 @@ import doAjaxRequest from "@/util/util.js";
 import CsvDownloader from "@/components/CsvDownloader.vue";
 import { watch } from "vue";
 
-const prospectVide = {
-  nom: "",
-  prenom: "",
-  numTel: "",
-  mail: "",
-  ville: "",
-  departement: "",
-  codePostal: "",
-};
-
 let data = reactive({
   prospects: [],
 });
@@ -76,12 +66,12 @@ const selectedSalons = ref([]);
 const sortKey = ref(null);
 const sortOrder = ref('asc');
 
-const filteredProspects = computed(() => {
-  if (selectedSalons.value.length === 0) return data.prospects;
-  return data.prospects.filter(prospect =>
-    selectedSalons.value.includes(prospect.salon)
-  );
-});
+// const filteredProspects = computed(() => {
+//   if (selectedSalons.value.length === 0) return data.prospects;
+//   return data.prospects.filter(prospect =>
+//     selectedSalons.value.includes(prospect.salon)
+//   );
+// });
 
 const sortedProspects = computed(() => {
   let prospects = data.prospects;  // On utilise directement data.prospects
@@ -95,7 +85,6 @@ const sortedProspects = computed(() => {
   });
 });
 
-
 function sortBy(key) {
   if (sortKey.value === key) {
     sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
@@ -104,20 +93,6 @@ function sortBy(key) {
     sortOrder.value = 'asc';
   }
 }
-
-/*function getProspect() {
-  doAjaxRequest("/api/prospects")
-    .then((result) => {
-      // Filtrer les données pour exclure la propriété _links
-      data.prospects = result._embedded.prospects.map(prospect => {
-        const { _links, ...rest } = prospect;
-        return rest;
-      });
-      console.log(data.prospects);
-    })
-    .catch((error) => alert(error.message));
-}
-*/
 
 function getProspects() {
   doAjaxRequest('/rest/getProspectsSalon')
@@ -138,7 +113,6 @@ function getProspects() {
     .catch((error) => alert(error.message));
 }
 
-
 async function getProspectsSpe(idSalon){
   return doAjaxRequest(`/rest/getProspectsSalon/${idSalon}`)
     .then((result) =>{
@@ -147,8 +121,6 @@ async function getProspectsSpe(idSalon){
     })
     .catch((error) => alert(error.message))
 }
-
-
 
 function getSalon() {
   doAjaxRequest('/api/salons')

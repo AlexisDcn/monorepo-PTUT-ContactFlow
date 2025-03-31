@@ -20,5 +20,11 @@ public class FormulaireService {
         return formulaireDao.formulairesActifs();
     }
 
+    @Transactional
+    public void deleteFormulaire(Integer salon) {
+        // Faire en premier pour respecter la cascade
+        formulaireDao.deleteFormulaire(salon);
+    }
+
 }
 

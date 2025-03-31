@@ -11,6 +11,7 @@ function getSalon() {
     .then((result) => {
       console.log(result._embedded)
       for (let elmnt of result._embedded.salons) {
+        console.log(elmnt);
         if (premierTour == false){
           selectedSalon.value = elmnt.idSalon
           premierTour = !premierTour
@@ -32,22 +33,21 @@ function handleDelete(){
   };
 }
 
-function deleteSalon(id){
-  deleteRelatif(id)
-  console.log(id);
+// Fonction de delete des salons
+
+function deleteSalon(id) {
   const options = {
     method: 'DELETE',
   }
-  doAjaxRequest(`/api/salons/${id}`, options)
-    .then((result) => {
-      console.log(result)
+  fetch(`/rest/deleteSalon/${id}`, options)
+    .then(() => {
+      // Met à jour la liste des salons
+      listSalon.length = 0;
+      getSalon();
     })
-    .catch((error) => alert(error.message))
+    .catch((error) => alert(error.message));
 }
 
-function deleteRelatif(id){
-  console.log('ahah', id);
-}
 
 onMounted(() => getSalon())
 </script>

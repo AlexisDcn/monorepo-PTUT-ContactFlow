@@ -13,4 +13,10 @@ public class SuivieService {
         this.suivieDao = suivieDao;
     }
 
+    @Transactional
+    public void deleteSuivi(Integer salon) {
+        // Faire en premier pour respecter la cascade
+        suivieDao.deleteSuivi(salon);
+    }
+
 }

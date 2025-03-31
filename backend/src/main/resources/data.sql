@@ -22,10 +22,10 @@ INSERT INTO Champ(id_champ, type, nom, placeholders) VALUES
                                                     (3, 'email', 'mail' ,'Entrez votre adresse mail');
 ALTER TABLE Champ ALTER COLUMN id_champ RESTART WITH 4;
 
-INSERT INTO Salon(id_salon, nom, date) VALUES
-                                            (1, 'Salon Étudiant', '2025-06-15'),
-                                            (2, 'Forum de l’Emploi', '2025-09-10'),
-                                            (3, 'Salon des Entrepreneurs', '2025-11-20');
+INSERT INTO Salon(id_salon, nom, archive, date) VALUES
+                                            (1, 'Salon Étudiant', false, '2025-06-15'),
+                                            (2, 'Forum de l’Emploi',false, '2025-09-10'),
+                                            (3, 'Salon des Entrepreneurs',false, '2025-11-20');
 ALTER TABLE Salon ALTER COLUMN id_salon RESTART WITH 4;
 
 INSERT INTO Prospect(id_prospect, nom, prenom, num_tel, mail, ville, departement, code_postal, id_salon) VALUES
