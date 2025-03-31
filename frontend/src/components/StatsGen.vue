@@ -116,7 +116,6 @@ function getProspects() {
 async function getProspectsSpe(idSalon){
   return doAjaxRequest(`/rest/getProspectsSalon/${idSalon}`)
     .then((result) =>{
-      console.log("blabla",result);
       return result
     })
     .catch((error) => alert(error.message))
@@ -125,11 +124,9 @@ async function getProspectsSpe(idSalon){
 function getSalon() {
   doAjaxRequest('/api/salons')
     .then((result) => {
-      console.log(result._embedded);
       for (let elmnt of result._embedded.salons) {
         listSalon.push(elmnt);
       }
-      console.log(listSalon);
 
       selectedSalons.value = listSalon.map(salon => salon.idSalon);
     })
@@ -137,30 +134,21 @@ function getSalon() {
 }
 
 async function handleCheckboxChange() {
-  console.log("✅ Salons sélectionnés :", selectedSalons.value);
-
   if (selectedSalons.value.length === listSalon.length) {
-    console.log("🔄 Toutes les cases sont cochées, récupération de tous les prospects...");
     await getProspects();
-    console.log("📋 Liste complète des prospects :", data.prospects);
   } else {
-    console.log("🔍 Récupération des prospects pour les salons sélectionnés...");
 
     let allProspects = [];
     for (let idSalon of selectedSalons.value) {
       let prospects = await getProspectsSpe(idSalon);
-      console.log(`📌 Prospects du salon ${idSalon} :`, prospects);
       allProspects.push(...prospects);
     }
 
-    console.log("📝 Prospects avant suppression des doublons :", allProspects);
 
     // Suppression des doublons
     let uniqueProspects = Array.from(new Map(allProspects.map(p => [p.idProspect, p])).values());
-    console.log("🚀 Prospects après suppression des doublons :", uniqueProspects);
 
     data.prospects = uniqueProspects;
-    console.log("🎯 Prospects mis à jour :", data.prospects);
   }
 }
 

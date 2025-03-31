@@ -34,7 +34,7 @@
     </div>
 
     <button @click="generateQRCode" class="btn btn-primary" :disabled="!isValidUrl">
-      Générer et télécharger
+      Générer
     </button>
 
     <div v-if="previewUrl" class="qr-preview">
