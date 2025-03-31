@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <router-view />
-      <FooterGeneral />
+      <!--<FooterGeneral />-->
     </v-main>
   </v-app>
 </template>
