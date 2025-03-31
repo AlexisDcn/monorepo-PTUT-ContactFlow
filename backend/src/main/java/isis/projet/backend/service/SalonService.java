@@ -17,8 +17,14 @@ public class SalonService {
         return salonDao.getSalon();
     }
 
+    @Transactional
     public void deleteSalon(Integer salon) {
-//        salonDao.deleteSalon();
+        // Faire en dernier pour respecter la cascade
+        salonDao.deleteSalon(salon);
+    }
+
+    public void archiver(Integer salon) {
+        salonDao.archiveSalon(salon);
     }
 
 }

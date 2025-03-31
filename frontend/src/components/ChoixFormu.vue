@@ -40,7 +40,7 @@ getFormulaires()
       </v-card>
     </div>
     <div class="listeB">
-      <button v-for="formu in listeForm" class="form-button" @click="navFormu(formu.salon.idSalon)" :idSalon="formu.salon.idSalon"> Formulaire {{ formu.idForm }}</button>
+      <button v-for="formu in listeForm" class="form-button" @click="navFormu(formu.idForm)" :idSalon="formu.salon.idSalon"> Formulaire {{ formu.idForm }}</button>
     </div>
   </div>
 

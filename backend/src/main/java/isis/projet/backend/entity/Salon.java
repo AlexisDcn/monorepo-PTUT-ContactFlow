@@ -21,5 +21,6 @@ public class Salon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSalon;
     private String nom;
+    private Boolean archive;
     private LocalDate date;
 }
