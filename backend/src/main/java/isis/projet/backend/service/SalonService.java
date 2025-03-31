@@ -23,6 +23,7 @@ public class SalonService {
         salonDao.deleteSalon(salon);
     }
 
+    @Transactional
     public void archiver(Integer salon) {
         salonDao.archiveSalon(salon);
     }

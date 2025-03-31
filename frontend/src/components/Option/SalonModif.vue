@@ -23,8 +23,18 @@ function getSalon() {
     .catch((error) => alert(error.message))
 }
 
-function handleClick() {
+function handleArchivage() {
   console.log(`Salon sélectionné : ${selectedSalon.value}`)
+  const options = {
+    method: 'PUT',
+  }
+  fetch(`/rest/archiver/${selectedSalon.value}`, options)
+    .then((result) => {
+      console.log(result);
+      listSalon.length = 0;
+      getSalon();
+    })
+    .catch((error) => alert(error.message));
 }
 
 function handleDelete(){
@@ -54,9 +64,10 @@ onMounted(() => getSalon())
 
 <template>
   <select v-model="selectedSalon">
-    <option v-for="salon of listSalon" :value="salon.idSalon">{{ salon.nom }}</option>
+    <option v-for="salon of listSalon" :value="salon.idSalon">{{ salon.nom }} <span v-if="salon.archive">(Archivé)</span>
+    </option>
   </select>
-  <button @click="handleClick">Modifier</button>
+  <button @click="handleArchivage">Archiver</button>
   <button @click="handleDelete"> Supprimer </button>
 </template>
 
