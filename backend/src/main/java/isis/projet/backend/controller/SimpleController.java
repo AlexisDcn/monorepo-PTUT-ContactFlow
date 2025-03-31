@@ -91,9 +91,9 @@ public class SimpleController {
     }
 
     @GetMapping("/getProspectsSalon/{idSalon}")
-    public Map<String, Integer> getProspectsSalon(@PathVariable("idSalon") Integer idSalon) {
+    public List<Prospect> getProspectsSalon(@PathVariable("idSalon") Integer idSalon) {
         log.info("Service getProspectsSalon" + idSalon);
-        return Map.of("Salon", prospectService.prospectSalon(idSalon));
+        return prospectService.prospectSalonNom(idSalon);
     }
 
     @GetMapping("/getProspectsSalon")

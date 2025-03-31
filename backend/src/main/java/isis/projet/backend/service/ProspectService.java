@@ -50,8 +50,14 @@ public class ProspectService {
     public Map<String, List<Prospect>> prospectSalonGlobalNom(List<Salon> salons) {
         Map<String, List<Prospect>> map = new HashMap<>();
         for (Salon salon : salons) {
-            map.put(salon.getNom(), prospectDao.prospectSalonNom(salon.getIdSalon()));
+            map.put(salon.getNom(), prospectDao.prospectSalonGlobalNom(salon.getIdSalon()));
         }
         return map;
     }
+
+    @Transactional
+    public List<Prospect> prospectSalonNom(Integer idSalon) {
+        return prospectDao.prospectSalonGlobalNom(idSalon);
+    }
+
 }

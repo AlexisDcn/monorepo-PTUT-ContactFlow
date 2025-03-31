@@ -11,7 +11,8 @@ public interface ProspectRepository extends JpaRepository<Prospect, Integer> {
     Integer prospectSalon(Integer idSalon);
 
     @Query("SELECT p FROM Prospect p WHERE p.salon.idSalon = :idSalon")
-    List<Prospect> prospectSalonNom(Integer idSalon);
+    List<Prospect> prospectSalonGlobalNom(Integer idSalon);
+
 
     @Query("SELECT YEAR(s.date) as annee, COUNT(p) FROM Prospect p JOIN p.salon s GROUP BY YEAR(s.date)")
     List<Object[]> countProspectsByYear();

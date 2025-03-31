@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <CsvDownloader :data="filteredProspects" :headers="headers" />
+    <CsvDownloader :data="data.prospects" :headers="headers" />
     <table class="data-table">
       <thead>
       <tr>
@@ -25,8 +25,8 @@
         >
           {{ header.text }}
           <span v-if="sortKey === header.value">
-              {{ sortOrder === 'asc' ? '▲' : '▼' }}
-            </span>
+          {{ sortOrder === 'asc' ? '▲' : '▼' }}
+        </span>
         </th>
       </tr>
       </thead>
@@ -36,6 +36,7 @@
       </tr>
       </tbody>
     </table>
+
   </div>
 </template>
 
@@ -43,6 +44,7 @@
 import { onMounted, reactive, ref, computed } from "vue";
 import doAjaxRequest from "@/util/util.js";
 import CsvDownloader from "@/components/CsvDownloader.vue";
+import { watch } from "vue";
 
 const prospectVide = {
   nom: "",
@@ -82,8 +84,8 @@ const filteredProspects = computed(() => {
 });
 
 const sortedProspects = computed(() => {
-  let prospects = filteredProspects.value;
-  if (!sortKey.value) return prospects;
+  let prospects = data.prospects;  // On utilise directement data.prospects
+  if (!sortKey.value) return prospects;  // Si aucun tri, retourner directement
   return [...prospects].sort((a, b) => {
     const aValue = a[sortKey.value];
     const bValue = b[sortKey.value];
@@ -92,6 +94,7 @@ const sortedProspects = computed(() => {
     return 0;
   });
 });
+
 
 function sortBy(key) {
   if (sortKey.value === key) {
@@ -116,32 +119,30 @@ function sortBy(key) {
 }
 */
 
-function getProspects(){
+function getProspects() {
   doAjaxRequest('/rest/getProspectsSalon')
     .then((result) => {
       // Itération sur le dictionnaire de base (Salon : {Dico})
       for (const [clefDicoGen, dicoSecondaire] of Object.entries(result)) {
-        console.log(clefDicoGen, dicoSecondaire);
-        // Itération sur le dico contenant les valeurs
+        // Itération sur chaque salon et les prospects associés
         for (const [salonNom, prospectList] of Object.entries(dicoSecondaire)) {
-          console.log(salonNom);
-          console.log(prospectList[0]);
           for (let prospect of prospectList) {
-            console.log(prospect);
-            data.prospects.push(prospect);
+            // Vérification pour éviter les doublons (en fonction de l'idProspect)
+            if (!data.prospects.some(p => p.idProspect === prospect.idProspect)) {
+              data.prospects.push(prospect);  // Ajout uniquement si le prospect n'est pas déjà présent
+            }
           }
-
-          console.log(data.prospects);
         }
       }
     })
-    .catch((error) => alert(error.message))
+    .catch((error) => alert(error.message));
 }
+
 
 async function getProspectsSpe(idSalon){
   return doAjaxRequest(`/rest/getProspectsSalon/${idSalon}`)
     .then((result) =>{
-      console.log("blabla",result.type);
+      console.log("blabla",result);
       return result
     })
     .catch((error) => alert(error.message))
@@ -157,18 +158,52 @@ function getSalon() {
         listSalon.push(elmnt);
       }
       console.log(listSalon);
+
+      selectedSalons.value = listSalon.map(salon => salon.idSalon);
     })
     .catch((error) => alert(error.message));
 }
 
-function handleCheckboxChange() {
-  console.log(`Salons sélectionnés : ${selectedSalons.value}`);
+async function handleCheckboxChange() {
+  console.log("✅ Salons sélectionnés :", selectedSalons.value);
+
+  if (selectedSalons.value.length === listSalon.length) {
+    console.log("🔄 Toutes les cases sont cochées, récupération de tous les prospects...");
+    await getProspects();
+    console.log("📋 Liste complète des prospects :", data.prospects);
+  } else {
+    console.log("🔍 Récupération des prospects pour les salons sélectionnés...");
+
+    let allProspects = [];
+    for (let idSalon of selectedSalons.value) {
+      let prospects = await getProspectsSpe(idSalon);
+      console.log(`📌 Prospects du salon ${idSalon} :`, prospects);
+      allProspects.push(...prospects);
+    }
+
+    console.log("📝 Prospects avant suppression des doublons :", allProspects);
+
+    // Suppression des doublons
+    let uniqueProspects = Array.from(new Map(allProspects.map(p => [p.idProspect, p])).values());
+    console.log("🚀 Prospects après suppression des doublons :", uniqueProspects);
+
+    data.prospects = uniqueProspects;
+    console.log("🎯 Prospects mis à jour :", data.prospects);
+  }
 }
+
+
+
+watch(selectedSalons, (newVal) => {
+  if (newVal.length === listSalon.length) {
+    getProspects();
+  }
+});
 
 onMounted(() => {
   getSalon();
   getProspects();
-  getProspectsSpe(1);
+  //getProspectsSpe(1);
 });
 </script>
 
