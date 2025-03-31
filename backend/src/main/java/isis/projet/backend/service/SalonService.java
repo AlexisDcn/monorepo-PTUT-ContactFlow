@@ -28,4 +28,8 @@ public class SalonService {
         salonDao.archiveSalon(salon);
     }
 
+    @Transactional
+    public void modifNom(Integer salon, String nvNom) {
+        salonDao.modifNom(salon, nvNom);
+    }
 }

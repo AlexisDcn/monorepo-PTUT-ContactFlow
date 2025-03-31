@@ -4,6 +4,8 @@ import {onMounted, reactive, ref} from 'vue'
 
 const listSalon = reactive([])
 const selectedSalon = ref(null);
+const editing = ref(false);
+const editedName = ref("");
 
 function getSalon() {
   let premierTour = false;
@@ -21,6 +23,28 @@ function getSalon() {
       console.log(listSalon)
     })
     .catch((error) => alert(error.message))
+}
+
+function handleModif() {
+  editing.value = true;
+  const selected = listSalon.find(salon => salon.idSalon === selectedSalon.value);
+  if (selected) {
+    editedName.value = selected.nom;
+  }
+}
+
+function handleSave() {
+  const options = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nom: editedName.value })
+  };
+  fetch(`/rest/modifNomSalon/${selectedSalon.value}`, options)
+    .then(() => {
+      editing.value = false;
+      listSalon.find(salon => salon.idSalon === selectedSalon.value).nom = editedName.value;
+    })
+    .catch((error) => alert(error.message));
 }
 
 // Fonction qui permet l'archivage
@@ -64,12 +88,21 @@ onMounted(() => getSalon())
 </script>
 
 <template>
-  <select v-model="selectedSalon">
-    <option v-for="salon of listSalon" :value="salon.idSalon">{{ salon.nom }} <span v-if="salon.archive">(Archivé)</span>
-    </option>
-  </select>
-  <button @click="handleArchivage">Archiver</button>
-  <button @click="handleDelete"> Supprimer </button>
+  <div v-if="editing">
+    <input v-model="editedName" type="text" />
+    <button @click="handleSave">Enregistrer</button>
+    <button @click="editing = false">Annuler</button>
+  </div>
+  <div v-else>
+    <select v-model="selectedSalon">
+      <option v-for="salon of listSalon" :key="salon.idSalon" :value="salon.idSalon">
+        {{ salon.nom }} <span v-if="salon.archive">(Archivé)</span>
+      </option>
+    </select>
+    <button @click="handleModif">Modifier</button>
+    <button @click="handleArchivage">Archiver</button>
+    <button @click="handleDelete">Supprimer</button>
+  </div>
 </template>
 
 <style scoped></style>

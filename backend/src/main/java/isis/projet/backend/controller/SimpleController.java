@@ -123,6 +123,11 @@ public class SimpleController {
         formulaireService.desactiver(idSalon);
         salonService.archiver(idSalon);
     }
+
+    @PutMapping("/modifNomSalon/{idSalon}")
+    public void modifNomSalon(@PathVariable("idSalon") Integer idSalon, @RequestParam String nvNom) {
+        salonService.modifNom(idSalon, nvNom);
+    }
 }
 
 
