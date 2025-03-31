@@ -1,6 +1,9 @@
 <template>
   <v-app-bar app color="1" dark>
-    <v-toolbar-title @click="goHome" style="cursor: pointer;">ISIS</v-toolbar-title>    <v-spacer></v-spacer>
+    <div @click="goHome" style="cursor: pointer;">
+      <img src="@/assets/logo-ISIS-horizontal-BLANC.png" alt="ISIS Logo" height="55">
+    </div>
+    <v-spacer></v-spacer>
 
     <v-btn text to="/admin">Accueil Admin</v-btn>
     <v-btn text to="/statistiques-generales">Statistiques</v-btn>
@@ -28,7 +31,9 @@ function goHome() {
 </script>
 
 <style scoped>
-.v-toolbar-title {
-  cursor: pointer;
+img {
+  max-height: 55px;
+  width: auto;
+  padding: 8px 0;
 }
 </style>
