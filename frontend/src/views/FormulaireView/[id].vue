@@ -1,5 +1,5 @@
 <template>
-  <AdminHeader />
+  <MainHeader />
   <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
   <ProspectForm :idSalon="idSalon" />
 </template>
@@ -10,6 +10,7 @@ import ProspectForm from "/src/components/ProspectForm.vue";
 import { useRoute } from "vue-router";
 import router from "@/router/index.js";
 import AdminHeader from "@/components/AdminHeader.vue";
+import MainHeader from "@/components/MainHeader.vue";
 const route = useRoute();
 const idSalon = route.params.idSalon;
 
