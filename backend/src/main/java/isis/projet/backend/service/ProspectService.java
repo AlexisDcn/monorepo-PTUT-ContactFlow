@@ -66,4 +66,14 @@ public class ProspectService {
         return prospectDao.prospectSalonGlobalNom(idSalon);
     }
 
+
+    @Transactional
+    public List<Prospect> getProspectsByYear(Integer year) {
+        return prospectDao.findProspectsByYear(year);
+    }
+
+    @Transactional
+    public List<Integer> getAvailableYears() {
+        return prospectDao.findDistinctYears();
+    }
 }

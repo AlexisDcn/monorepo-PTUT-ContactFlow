@@ -128,6 +128,18 @@ public class SimpleController {
     public void modifNomSalon(@PathVariable("idSalon") Integer idSalon, @RequestParam String nvNom) {
         salonService.modifNom(idSalon, nvNom);
     }
+
+    @GetMapping("/getProspectsByYear/{year}")
+    public List<Prospect> getProspectsByYear(@PathVariable("year") Integer year) {
+        log.info("Service getProspectsByYear for year: " + year);
+        return prospectService.getProspectsByYear(year);
+    }
+
+    @GetMapping("/getAvailableYears")
+    public List<Integer> getAvailableYears() {
+        log.info("Service getAvailableYears");
+        return prospectService.getAvailableYears();
+    }
 }
 
 

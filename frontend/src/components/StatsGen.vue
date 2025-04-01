@@ -18,8 +18,26 @@
       </div>
     </div>
 
+    <div class="year-filter">
+      <label>Filtrer par année :</label>
+      <div class="checkbox-container">
+        <div class="checkbox-item" v-for="year in availableYears" :key="year">
+          <label class="custom-checkbox">
+            <input
+              type="checkbox"
+              :value="year"
+              v-model="selectedYears"
+              @change="handleYearFilterChange"
+            />
+            <span class="checkmark"></span>
+          </label>
+          <span>{{ year }}</span>
+        </div>
+      </div>
+    </div>
+
     <div class="csv-download">
-      <CsvDownloader :data="data.prospects" :headers="headers" />
+      <CsvDownloader :data="data.prospects" :headers="headers"/>
     </div>
 
     <table class="data-table">
@@ -48,7 +66,7 @@
     <!-- Table Footer avec pagination -->
     <div class="data-table-footer">
       <div class="rows-per-page">
-        <span>Lignes par page:</span>
+        <span>Prospects par page:</span>
         <select v-model="rowsPerPage" @change="currentPage = 1">
           <option :value="10">10</option>
           <option :value="25">25</option>
@@ -101,28 +119,30 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, computed } from "vue";
+import {onMounted, reactive, ref, computed} from "vue";
 import doAjaxRequest from "@/util/util.js";
 import CsvDownloader from "@/components/CsvDownloader.vue";
-import { watch } from "vue";
+import {watch} from "vue";
 
 let data = reactive({
   prospects: [],
 });
 
 const headers = [
-  { text: 'ID', value: 'idProspect' },
-  { text: 'Nom', value: 'nom' },
-  { text: 'Prénom', value: 'prenom' },
-  { text: 'Numéro de Téléphone', value: 'numTel' },
-  { text: 'Email', value: 'mail' },
-  { text: 'Ville', value: 'ville' },
-  { text: 'Département', value: 'departement' },
-  { text: 'Code Postal', value: 'codePostal' },
+  {text: 'ID', value: 'idProspect'},
+  {text: 'Nom', value: 'nom'},
+  {text: 'Prénom', value: 'prenom'},
+  {text: 'Numéro de Téléphone', value: 'numTel'},
+  {text: 'Email', value: 'mail'},
+  {text: 'Ville', value: 'ville'},
+  {text: 'Département', value: 'departement'},
+  {text: 'Code Postal', value: 'codePostal'},
 ];
 
 const listSalon = reactive([]);
 const selectedSalons = ref([]);
+const availableYears = ref([]);
+const selectedYears = ref([]);
 const sortKey = ref(null);
 const sortOrder = ref('asc');
 
@@ -206,12 +226,29 @@ function getProspects() {
     .catch((error) => alert(error.message));
 }
 
-async function getProspectsSpe(idSalon){
+async function getProspectsSpe(idSalon) {
   return doAjaxRequest(`/rest/getProspectsSalon/${idSalon}`)
-    .then((result) =>{
+    .then((result) => {
       return result
     })
     .catch((error) => alert(error.message))
+}
+
+function getAvailableYears() {
+  doAjaxRequest('/rest/getAvailableYears')
+    .then((result) => {
+      availableYears.value = result;
+      selectedYears.value = [...result]; // Sélectionner toutes les années par défaut
+    })
+    .catch((error) => alert(error.message));
+}
+
+async function getProspectsByYear(year) {
+  return doAjaxRequest(`/rest/getProspectsByYear/${year}`)
+    .then((result) => {
+      return result;
+    })
+    .catch((error) => alert(error.message));
 }
 
 function getSalon() {
@@ -230,13 +267,29 @@ async function handleCheckboxChange() {
   // Réinitialiser la pagination lors du changement de filtre
   currentPage.value = 1;
 
-  if (selectedSalons.value.length === listSalon.length) {
+  if (selectedSalons.value.length === listSalon.length &&
+    selectedYears.value.length === availableYears.value.length) {
     await getProspects();
   } else {
     let allProspects = [];
-    for (let idSalon of selectedSalons.value) {
-      let prospects = await getProspectsSpe(idSalon);
-      allProspects.push(...prospects);
+
+    // Si toutes les années sont sélectionnées, utiliser la logique existante du filtre salon
+    if (selectedYears.value.length === availableYears.value.length) {
+      for (let idSalon of selectedSalons.value) {
+        let prospects = await getProspectsSpe(idSalon);
+        allProspects.push(...prospects);
+      }
+    } else {
+      // Filtrer par année et salon
+      for (let year of selectedYears.value) {
+        let yearProspects = await getProspectsByYear(year);
+
+        // Filtrer par salons sélectionnés
+        yearProspects = yearProspects.filter(p =>
+          selectedSalons.value.includes(p.salon.idSalon));
+
+        allProspects.push(...yearProspects);
+      }
     }
 
     // Suppression des doublons
@@ -246,14 +299,65 @@ async function handleCheckboxChange() {
   }
 }
 
+async function handleYearFilterChange() {
+  // Réinitialiser la pagination
+  currentPage.value = 1;
+
+  // Suppression de la condition qui réinitialise selectedYears
+  // if (selectedYears.value.length === 0) {
+  //   selectedYears.value = [...availableYears.value];
+  //   return;
+  // }
+
+  if (selectedSalons.value.length === listSalon.length &&
+    selectedYears.value.length === availableYears.value.length) {
+    // Si tous les salons et toutes les années sont sélectionnés, obtenir tous les prospects
+    await getProspects();
+  } else {
+    // Sinon, filtrer par salons et années sélectionnés
+    let allProspects = [];
+
+    // Obtenir les prospects pour chaque année sélectionnée
+    for (let year of selectedYears.value) {
+      let yearProspects = await getProspectsByYear(year);
+
+      // Si des salons spécifiques sont sélectionnés, filtrer les résultats
+      if (selectedSalons.value.length !== listSalon.length) {
+        yearProspects = yearProspects.filter(p =>
+          selectedSalons.value.includes(p.salon.idSalon));
+      }
+
+      allProspects.push(...yearProspects);
+    }
+
+    // Si aucune année n'est sélectionnée, la liste sera vide
+
+    // Supprimer les doublons
+    let uniqueProspects = Array.from(
+      new Map(allProspects.map(p => [p.idProspect, p])).values()
+    );
+
+    data.prospects = uniqueProspects;
+  }
+}
+
 watch(selectedSalons, (newVal) => {
-  if (newVal.length === listSalon.length) {
+  if (newVal.length === listSalon.length &&
+    selectedYears.value.length === availableYears.value.length) {
+    getProspects();
+  }
+});
+
+watch(selectedYears, (newVal) => {
+  if (newVal.length === availableYears.value.length &&
+    selectedSalons.value.length === listSalon.length) {
     getProspects();
   }
 });
 
 onMounted(() => {
   getSalon();
+  getAvailableYears();
   getProspects();
 });
 </script>
@@ -268,11 +372,11 @@ onMounted(() => {
 }
 
 /* Style des checkboxes */
-.salon-filter {
+.salon-filter, .year-filter {
   margin-bottom: 20px;
 }
 
-.salon-filter label {
+.salon-filter label, .year-filter label {
   font-weight: bold;
   margin-bottom: 10px;
   display: block;
