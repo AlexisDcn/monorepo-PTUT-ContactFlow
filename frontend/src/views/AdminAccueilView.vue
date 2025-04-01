@@ -47,7 +47,7 @@ import AdminHeader from "@/components/AdminHeader.vue";
   max-width: 300px;
   padding: 10px;
   margin: 10px;
-  background-color: #007bff;
+  background-color: #5f4e9b;
   color: white;
   border: none;
   border-radius: 8px;
@@ -58,7 +58,7 @@ import AdminHeader from "@/components/AdminHeader.vue";
 }
 
 .btn:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
+  transform: scale(1.02) !important;
+  filter: brightness(0.9) !important;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="1" dark>
+  <v-app-bar app color="primary" dark>
     <div @click="goHome" style="cursor: pointer;">
       <img src="@/assets/logo-ISIS-horizontal-BLANC.png" alt="ISIS Logo" height="55">
     </div>

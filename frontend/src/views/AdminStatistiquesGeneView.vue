@@ -3,16 +3,15 @@
 import StatsGen from "@/components/StatsGen.vue";
 import router from "@/router/index.js";
 import AdminHeader from "@/components/AdminHeader.vue";
+import BoutonRetour from "@/components/BoutonRetour.vue";
 
-function boutonRetour() {
-  router.back();
-}
+
 </script>
 
 <template>
   <AdminHeader />
+  <BoutonRetour />
  <v-container>
-   <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
    <StatsGen />
  </v-container>
 </template>

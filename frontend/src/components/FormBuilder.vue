@@ -18,7 +18,10 @@
         <ul>
           <li v-for="(champ, champIndex) in section.champs" :key="champIndex" class="champ-item">
             <span>{{ champ.nom }}</span>
-            <button @click="removeChamp(index, champIndex)">Supprimer</button>
+            <button @click="removeChamp(index, champIndex)" class="delete-btn">
+              Supprimer<span class="icon">🗑️</span>
+            </button>
+
           </li>
         </ul>
         <input
@@ -26,11 +29,19 @@
           type="text"
           placeholder="Nom du champ"
         />
-        <button @click="addChamp(index)">Ajouter un champ</button>
-        <button @click="removeSection(index)">Supprimer la section</button>
+        <button @click="addChamp(index)" class="add-field-btn">
+          Ajouter un champ <span class="icon">＋</span>
+        </button>
+        <button @click="removeSection(index)" class="delete-section-btn">
+          Supprimer la section <span class="icon">🗑️</span>
+        </button>
       </div>
-      <button @click="addSection">Ajouter une section</button>
-      <button @click="saveForm">Enregistrer le formulaire</button>
+      <button @click="addSection" class="add-section-btn">
+        Ajouter une section <span class="icon">＋</span>
+      </button>
+      <button @click="saveForm" class="error-btn">
+        Publier le formulaire <span class="icon">✉️</span>
+      </button>
     </div>
   </div>
 </template>
@@ -137,21 +148,108 @@ onMounted(() => {
 
 <style scoped>
 .form-builder {
-  max-width: 600px;
+  max-width: 700px;
   margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+.form-container {
+  background-color: #5f4e9b;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+h2, h3 {
+  margin-bottom: 10px;
 }
 
 .form-section {
-  margin-bottom: 20px;
+  background-color: #2f2769;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
 }
 
 .champ-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 8px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.champ-item span {
+  flex-grow: 1;
+  margin-left: 10px;
+  color: black;
+}
+
+.champ-item button {
+  background: none;
+  border: none;
+  color: #ed6962;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+input {
+  width: calc(100% - 20px);
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  margin-top: 5px;
 }
 
 button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #5f4e9b;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s, filter 0.2s;
   margin-top: 10px;
 }
+
+button:hover {
+  transform: scale(1.02);
+  filter: brightness(0.9);
+}
+
+.error-btn {
+  background-color: #ed6962;
+}
+
+.error-btn:hover {
+  filter: brightness(0.9);
+}
+
+/* Icônes */
+.icon {
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+/* Espacement entre les sections */
+.add-section-btn {
+  background-color: #2f2769;
+  margin-top: 15px;
+}
+
+
+
 </style>

@@ -117,7 +117,7 @@ onMounted(() => {
 
 .bouton {
   padding: 10px;
-  background-color: #007bff;
+  background-color: #ed6962;
   color: white;
   border: none;
   border-radius: 4px;
@@ -125,7 +125,9 @@ onMounted(() => {
 }
 
 .bouton:hover {
-  background-color: #0056b3;
+  background-color: #ed6962;
+  transform: scale(1.02);
+  filter: brightness(0.9);
 }
 
 </style>

@@ -33,14 +33,14 @@
       >
     </div>
 
-    <button @click="generateQRCode" class="btn btn-primary" :disabled="!isValidUrl">
+    <button @click="generateQRCode" class="btn primary-btn" :disabled="!isValidUrl">
       Générer
     </button>
 
     <div v-if="previewUrl" class="qr-preview">
       <h3>Aperçu:</h3>
       <img :src="previewUrl" alt="QR Code Preview">
-      <button @click="downloadQRCode" class="btn btn-success mt-2">
+      <button @click="downloadQRCode" class="btn success-btn">
         Télécharger
       </button>
     </div>
@@ -63,24 +63,21 @@ export default {
   },
   computed: {
     isValidUrl() {
-      // Validation URL basique
       return this.url.trim() !== '';
     }
   },
   methods: {
     async generateQRCode() {
       if (!this.isValidUrl) return;
-
       try {
         const response = await axios.post('/api/qrcode/generate', {
           url: this.url,
           format: this.format,
           size: this.size
         }, {
-          responseType: 'blob' // Important pour recevoir des données binaires
+          responseType: 'blob'
         });
 
-        // Créer un URL pour l'aperçu
         const blob = new Blob([response.data], {
           type: this.format === 'png' ? 'image/png' : 'image/jpeg'
         });
@@ -93,8 +90,6 @@ export default {
     },
     downloadQRCode() {
       if (!this.qrCodeBlob) return;
-
-      // Créer un lien pour télécharger
       const link = document.createElement('a');
       link.href = URL.createObjectURL(this.qrCodeBlob);
       link.download = `qrcode.${this.format}`;
@@ -109,44 +104,61 @@ export default {
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
+  border-radius: 10px;
+  background: #f5f5f5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .form-group {
   margin-bottom: 15px;
+  text-align: left;
 }
 
 .form-control {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   margin-top: 5px;
+  border: 1px solid #2f2769;
+  border-radius: 5px;
 }
 
 .btn {
-  padding: 8px 16px;
+  padding: 10px 20px;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.btn-primary {
-  background-color: #4CAF50;
+.primary-btn {
+  background-color: #2f2769;
   color: white;
-  border: none;
 }
 
-.btn-success {
-  background-color: #2196F3;
+.success-btn {
+  background-color: #5f4e9b;
   color: white;
-  border: none;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  filter: brightness(0.9);
 }
 
 .qr-preview {
   margin-top: 20px;
   text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fff;
 }
 
 .qr-preview img {
   max-width: 100%;
   height: auto;
   margin: 10px 0;
-  border: 1px solid #ddd;
+  border: 2px solid #2f2769;
+  border-radius: 5px;
 }
 </style>

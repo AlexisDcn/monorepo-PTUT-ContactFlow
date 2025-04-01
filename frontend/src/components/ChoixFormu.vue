@@ -56,12 +56,13 @@ getFormulaires()
 }
 
 .card{
-  background-color: #d0ebff !important; /* Bleu clair */
+  background-color: #5f4e9b !important; /* Bleu clair */
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   max-width: 600px;
+  color: white;
 }
 
 .listeB {
@@ -75,7 +76,7 @@ getFormulaires()
   max-width: 300px;
   padding: 10px;
   margin: 10px;
-  background-color: #007bff;
+  background-color: #2f2769;
   color: white;
   border: none;
   border-radius: 8px;
@@ -85,7 +86,7 @@ getFormulaires()
 }
 
 .form-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
+  transform: scale(1.02) !important;
+  filter: brightness(0.9) !important;
 }
 </style>

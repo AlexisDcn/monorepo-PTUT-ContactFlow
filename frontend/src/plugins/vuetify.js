@@ -11,18 +11,17 @@ const vuetify = createVuetify({
       nouvelleCharte: {
         dark: false,
         colors: {
-          1: '#2f2769',
-          2: '#5f4e9b',
-          3: '#9059a0',
-          4: '#ed6962',
-          paginationBackground: '#5f4e9b', // Fond de la pagination
-          paginationText: '#ffffff', // Couleur du texte
-          paginationActive: '#ed6962', // Couleur de la page active
+          primary: '#2f2769',
+          secondary: '#5f4e9b',
+          accent: '#9059a0',
+          error: '#ed6962',
+          info: '#5f4e9b',
+          success: '#9059a0',
+          warning: '#ed6962',
         },
       },
     },
   },
 });
-
 
 export default vuetify;
