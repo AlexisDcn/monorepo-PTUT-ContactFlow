@@ -1,7 +1,6 @@
 <template>
   <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
   <v-container>
-    <HeaderAdmin />
     <h1>Graphique évolutif</h1>
     <VueApexCharts :options="chartOptions" :series="chartOptions.series" />
   </v-container>
@@ -21,7 +20,6 @@
 </template>
 
 <script setup>
-import HeaderAdmin from "@/components/AdminHeader.vue";
 import VueApexCharts from "vue3-apexcharts";
 import {onMounted, reactive, ref, watch} from "vue";
 import doAjaxRequest from "@/util/util.js";
