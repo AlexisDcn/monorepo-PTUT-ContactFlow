@@ -27,4 +27,5 @@ public interface ProspectRepository extends JpaRepository<Prospect, Integer> {
     @Modifying
     @Query("DELETE FROM Prospect p WHERE p.salon.idSalon = :idSalon")
     void deleteProspect(Integer idSalon);
+
 }

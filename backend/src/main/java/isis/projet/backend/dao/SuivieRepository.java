@@ -12,4 +12,8 @@ public interface SuivieRepository extends JpaRepository<Suivie, Integer> {
     @Query("DELETE FROM Suivie s WHERE s.prospect.salon.idSalon = :idSalon")
     void deleteSuivi(Integer idSalon);
 
+    @Modifying
+    @Query("DELETE FROM Suivie s WHERE s.formation.id =:idFormation")
+    void deleteSuiviFormation(Integer idFormation);
+
 }

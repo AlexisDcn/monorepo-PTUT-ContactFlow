@@ -3,13 +3,13 @@ import doAjaxRequest from '@/util/util.js'
 import {onMounted, reactive, ref} from 'vue'
 import router from "@/router/index.js";
 
+// Constantes de stockage
 const listSalon = reactive([])
 const selectedSalon = ref(null);
 const editing = ref(false);
 const editedName = ref("");
 
 const ajouter = ref(false);
-
 
 let data = reactive({
   // Les données saisies dans le formulaire
@@ -18,6 +18,10 @@ let data = reactive({
     date : "",
     archive : ""},
 })
+
+// Fonctions
+
+// ---------------- Fonctions de base --------------- //
 
 function getSalon() {
   let premierTour = false;
@@ -37,7 +41,7 @@ function getSalon() {
     .catch((error) => alert(error.message))
 }
 
-function handleModif() {
+function handleModifAffich() {
   editing.value = true;
   const selected = listSalon.find(salon => salon.idSalon === selectedSalon.value);
   if (selected) {
@@ -45,22 +49,27 @@ function handleModif() {
   }
 }
 
-function handleSave() {
-  const options = {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nom: editedName.value })
-  };
-  fetch(`/rest/modifNomSalon/${selectedSalon.value}`, options)
-    .then(() => {
-      editing.value = false;
-      listSalon.find(salon => salon.idSalon === selectedSalon.value).nom = editedName.value;
-    })
-    .catch((error) => alert(error.message));
+function handleAjoutAffich(){
+  ajouter.value = !ajouter.value
 }
 
+function handleArchive(){
+  if(confirm("Archiver ce salon rend les formulaires liés inaccessibles pour les utilisateurs. Êtes vous sûr de vouloir archiver ?")){
+    archiverSalon()
+  };
+}
+
+// Fonction qui appelle la suppression des salons
+function handleDelete(){
+  if(confirm("Êtes vous sûr de vouloir supprimer ce salon ? Cela va entraîner la suppression de tous les prospects liés à ce salon")){
+    deleteSalon(selectedSalon.value)
+  };
+}
+
+// ----------------- Fonctions CRUD ------------------- //
+
 // Fonction qui permet l'archivage
-function handleArchivage() {
+function archiverSalon() {
   console.log(`Salon sélectionné : ${selectedSalon.value}`)
   const options = {
     method: 'PUT',
@@ -72,13 +81,6 @@ function handleArchivage() {
       getSalon();
     })
     .catch((error) => alert(error.message));
-}
-
-// Fonction qui appelle la suppression des salons
-function handleDelete(){
-  if(confirm("Êtes vous sûr de vouloir supprimer ce salon ? Cela va entraîner la suppression de tous les prospects liés à ce salon")){
-    deleteSalon(selectedSalon.value)
-  };
 }
 
 // Fonction de delete des salons
@@ -95,10 +97,7 @@ function deleteSalon(id) {
     .catch((error) => alert(error.message));
 }
 
-function handleAjoutAffich(){
-  ajouter.value = !ajouter.value
-}
-
+// Fonction ajout de salon
 function ajouteSalon(){
   const options = {
     method: 'POST',
@@ -125,13 +124,29 @@ function ajouteSalon(){
     .catch((error) => alert(error.message))
 }
 
+// Fonction modif du nom du salon
+function modificationSalon() {
+  const options = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nom: editedName.value })
+  };
+  fetch(`/rest/modifNomSalon/${selectedSalon.value}`, options)
+    .then(() => {
+      editing.value = false;
+      listSalon.find(salon => salon.idSalon === selectedSalon.value).nom = editedName.value;
+    })
+    .catch((error) => alert(error.message));
+}
+
 onMounted(() => getSalon())
 </script>
 
 <template>
+  <h3>Salons</h3>
   <div v-if="editing">
     <input v-model="editedName" type="text" />
-    <button @click="handleSave">Enregistrer</button>
+    <button @click="modificationSalon">Enregistrer</button>
     <button @click="editing = false">Annuler</button>
   </div>
   <div v-else>
@@ -140,8 +155,8 @@ onMounted(() => getSalon())
         {{ salon.nom }} <span v-if="salon.archive">(Archivé)</span>
       </option>
     </select>
-    <button @click="handleModif">Modifier</button>
-    <button @click="handleArchivage">Archiver</button>
+    <button @click="handleModifAffich">Modifier</button>
+    <button @click="handleArchive">Archiver</button>
     <button @click="handleDelete">Supprimer</button>
     <button @click="handleAjoutAffich">Ajouter</button>
   </div>

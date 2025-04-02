@@ -19,4 +19,9 @@ public class SuivieService {
         suivieDao.deleteSuivi(salon);
     }
 
+    @Transactional
+    public void deleteSuiviFormation(Integer formation) {
+        // Faire en premier pour respecter la cascade
+        suivieDao.deleteSuiviFormation(formation);
+    }
 }

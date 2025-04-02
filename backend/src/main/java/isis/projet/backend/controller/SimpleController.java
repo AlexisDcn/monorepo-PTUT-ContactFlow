@@ -20,8 +20,9 @@ public class SimpleController {
     private final InfoService infoService;
     private final SuivieService suivieService;
     private final ChampService champService;
+    private final FormationService formationService;
 
-    public SimpleController(CountryService countryService, FormulaireService formulaireService, ContientService contientService, ProspectService prospectService, SalonService salonService, InfoService infoService, SuivieService suivieService, ChampService champService) {
+    public SimpleController(CountryService countryService, FormulaireService formulaireService, ContientService contientService, ProspectService prospectService, SalonService salonService, InfoService infoService, SuivieService suivieService, ChampService champService, FormationService formationService) {
         this.countryService = countryService;
         this.formulaireService = formulaireService;
         this.contientService = contientService;
@@ -30,6 +31,7 @@ public class SimpleController {
         this.infoService = infoService;
         this.suivieService = suivieService;
         this.champService = champService;
+        this.formationService = formationService;
     }
 
     @GetMapping("/hello")
@@ -100,6 +102,12 @@ public class SimpleController {
 
         // Enfin, suppression du salon :)
         salonService.deleteSalon(idSalon);
+    }
+
+    @DeleteMapping("/deleteFormation/{idFormation}")
+    public void deleteFormation(@PathVariable("idFormation") Integer idFormation) {
+        suivieService.deleteSuiviFormation(idFormation);
+        formationService.deleteFormation(idFormation);
     }
 
     @GetMapping("/getProspectsSalon/{idSalon}")
