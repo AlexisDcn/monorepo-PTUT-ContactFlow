@@ -1,6 +1,7 @@
 <script setup>
 import doAjaxRequest from '@/util/util.js'
 import {onMounted, reactive, ref} from 'vue'
+import router from "@/router/index.js";
 
 const listSalon = reactive([])
 const selectedSalon = ref(null);
@@ -99,7 +100,29 @@ function handleAjoutAffich(){
 }
 
 function ajouteSalon(){
-  console.log(data.formulaire);
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(data.formulaire),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+  console.log(JSON.stringify(data.formulaire))
+
+  // On appelle l'API REST générée par les repositories Spring Data REST
+  doAjaxRequest('/api/salons', options)
+    .then((result) => {
+      console.log('Salon ajouté :', result)
+
+      // MAJ de la liste des salons
+      listSalon.length = 0;
+      getSalon();
+
+      // MAJ de l'affichage du form d'ajout
+      handleAjoutAffich();
+      data.formulaire = {};
+    })
+    .catch((error) => alert(error.message))
 }
 
 onMounted(() => getSalon())

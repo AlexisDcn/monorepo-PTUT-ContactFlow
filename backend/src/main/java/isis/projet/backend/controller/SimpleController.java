@@ -124,7 +124,8 @@ public class SimpleController {
     }
 
     @PutMapping("/modifNomSalon/{idSalon}")
-    public void modifNomSalon(@PathVariable("idSalon") Integer idSalon, @RequestParam String nvNom) {
+    public void modifNomSalon(@PathVariable("idSalon") Integer idSalon, @RequestBody Map<String, String> payload) {
+        String nvNom = payload.get("nom");
         salonService.modifNom(idSalon, nvNom);
     }
 
