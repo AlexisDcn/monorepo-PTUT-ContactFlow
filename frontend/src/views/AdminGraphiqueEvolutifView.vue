@@ -9,4 +9,5 @@
 <script setup>
   import GraphiqueAnnees from "@/components/GraphiqueAnnees.vue";
   import AdminHeader from "@/components/AdminHeader.vue";
+  import GraphiqueSalon from "@/components/GraphiqueSalon.vue";
 </script>

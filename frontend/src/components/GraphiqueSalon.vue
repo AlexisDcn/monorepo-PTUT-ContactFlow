@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import HeaderAdmin from "@/components/HeaderAdmin.vue";
+import HeaderAdmin from "@/components/AdminHeader.vue";
 import VueApexCharts from "vue3-apexcharts";
 import {onMounted, reactive, ref, watch} from "vue";
 import doAjaxRequest from "@/util/util.js";
