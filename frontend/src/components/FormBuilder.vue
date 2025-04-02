@@ -13,12 +13,11 @@
         </select>
       </div>
 
-      <div v-for="(section, index) in formSections" :key="index" class="form-section">
-        <h3>Section {{ index + 1 }}</h3>
+      <div class="form-fields">
         <ul>
-          <li v-for="(champ, champIndex) in section.champs" :key="champIndex" class="champ-item">
+          <li v-for="(champ, champIndex) in formChamps" :key="champIndex" class="champ-item">
             <span>{{ champ.nom }}</span>
-            <button @click="removeChamp(index, champIndex)" class="delete-btn">
+            <button @click="removeChamp(champIndex)" class="delete-btn">
               Supprimer<span class="icon">🗑️</span>
             </button>
           </li>
@@ -33,16 +32,10 @@
           type="text"
           placeholder="Placeholder du champ"
         />
-        <button @click="addChamp(index)" class="add-field-btn">
+        <button @click="addChamp" class="add-field-btn">
           Ajouter un champ <span class="icon">＋</span>
         </button>
-        <button @click="removeSection(index)" class="delete-section-btn">
-          Supprimer la section <span class="icon">🗑️</span>
-        </button>
       </div>
-      <button @click="addSection" class="add-section-btn">
-        Ajouter une section <span class="icon">＋</span>
-      </button>
       <button @click="saveForm" class="error-btn">
         Publier le formulaire <span class="icon">✉️</span>
       </button>
@@ -55,12 +48,7 @@ import { ref, reactive, onMounted } from 'vue';
 import doAjaxRequest from '@/util/util.js';
 import { useRouter } from 'vue-router';
 
-const formSections = ref([
-  {
-    champs: []
-  }
-]);
-
+const formChamps = ref([]);
 const newChampName = ref('');
 const newChampPlaceholder = ref('');
 const router = useRouter();
@@ -69,53 +57,49 @@ const router = useRouter();
 const listSalon = reactive([]);
 const selectedSalon = ref(null);
 
-function addSection() {
-  formSections.value.push({
-    champs: []
-  });
-}
-
-function addChamp(sectionIndex) {
+function addChamp() {
   if (newChampName.value.trim() !== '') {
-    formSections.value[sectionIndex].champs.push({
+    formChamps.value.push({
       nom: newChampName.value,
-      type: 'text', // Vous pouvez ajuster le type selon vos besoins
-      placeholder: newChampPlaceholder.value // Ajouter le placeholder
+      type: 'text',
+      placeholders: newChampPlaceholder.value
     });
-    newChampName.value = ''; // Réinitialiser le nom du champ après ajout
-    newChampPlaceholder.value = ''; // Réinitialiser le placeholder après ajout
+    newChampName.value = '';
+    newChampPlaceholder.value = '';
   }
 }
 
-function removeSection(sectionIndex) {
-  formSections.value.splice(sectionIndex, 1);
-}
-
-function removeChamp(sectionIndex, champIndex) {
-  formSections.value[sectionIndex].champs.splice(champIndex, 1);
+function removeChamp(champIndex) {
+  formChamps.value.splice(champIndex, 1);
 }
 
 async function saveForm() {
   try {
     // Créer les champs
-    const champIds = [];
-    for (const section of formSections.value) {
-      for (const champ of section.champs) {
-        const response = await doAjaxRequest('/rest/createChamp', {
-          method: 'POST',
-          body: JSON.stringify(champ),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        champIds.push(response.idChamp);
-      }
+    const allChamps = [];
+
+    for (const champ of formChamps.value) {
+      const champsData = {
+        ...champ
+      };
+
+      const response = await doAjaxRequest('/rest/createChamp', {
+        method: 'POST',
+        body: JSON.stringify(champsData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      allChamps.push({
+        idChamp: response.idChamp
+      });
     }
 
     // Créer le formulaire
     const formulaireData = {
       actif: true,
-      salon: {idSalon: selectedSalon.value}, // Envoyer uniquement l'ID du salon
+      salon: {idSalon: selectedSalon.value}
     };
 
     const formulaireResponse = await doAjaxRequest('/rest/createFormulaire', {
@@ -128,11 +112,14 @@ async function saveForm() {
 
     const formulaireId = formulaireResponse.idForm;
 
-    // Créer les relations Contient
-    for (const champId of champIds) {
+    // Créer les relations Contient pour chaque champ
+    for (const champ of allChamps) {
       await doAjaxRequest('/rest/createContient', {
         method: 'POST',
-        body: JSON.stringify({champId, formulaireId}),
+        body: JSON.stringify({
+          champId: champ.idChamp,
+          formulaireId: formulaireId
+        }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -185,11 +172,11 @@ onMounted(() => {
   color: white;
 }
 
-h2, h3 {
+h2 {
   margin-bottom: 10px;
 }
 
-.form-section {
+.form-fields {
   background-color: #2f2769;
   padding: 15px;
   border-radius: 10px;
@@ -238,7 +225,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #5f4e9b;
+  background-color: #5f4e9b !important;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -255,7 +242,7 @@ button:hover {
 }
 
 .error-btn {
-  background-color: #ed6962;
+  background-color: #ed6962 !important;
 }
 
 .error-btn:hover {
@@ -268,8 +255,7 @@ button:hover {
   margin-left: 5px;
 }
 
-/* Espacement entre les sections */
-.add-section-btn {
+.add-field-btn {
   background-color: #2f2769;
   margin-top: 15px;
 }

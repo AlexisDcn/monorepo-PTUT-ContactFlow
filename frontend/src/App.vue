@@ -30,7 +30,4 @@ html, body {
 .content-spacer {
   min-height: 45vh;
 }
-.page-container {
-  min-height: 110vh;
-}
 </style>
