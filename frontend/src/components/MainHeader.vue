@@ -4,6 +4,8 @@
       <img src="@/assets/logo-ISIS-horizontal-BLANC.png" alt="ISIS Logo" height="55">
     </div>
     <v-spacer></v-spacer>
+    <p>Contact'Flow</p>
+    <v-spacer></v-spacer>
 
     <v-btn text @click="login">Se Connecter</v-btn>
   </v-app-bar>
@@ -30,5 +32,10 @@ img {
   max-height: 55px;
   width: auto;
   padding: 8px 0;
+}
+p{
+  font-weight: bold;
+  font-size: 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 </style>

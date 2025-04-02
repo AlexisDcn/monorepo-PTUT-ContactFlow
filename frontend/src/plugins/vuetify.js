@@ -21,6 +21,7 @@ const vuetify = createVuetify({
         },
       },
     },
+
   },
 });
 

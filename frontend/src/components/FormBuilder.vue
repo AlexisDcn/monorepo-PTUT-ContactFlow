@@ -21,13 +21,17 @@
             <button @click="removeChamp(index, champIndex)" class="delete-btn">
               Supprimer<span class="icon">🗑️</span>
             </button>
-
           </li>
         </ul>
         <input
           v-model="newChampName"
           type="text"
           placeholder="Nom du champ"
+        />
+        <input
+          v-model="newChampPlaceholder"
+          type="text"
+          placeholder="Placeholder du champ"
         />
         <button @click="addChamp(index)" class="add-field-btn">
           Ajouter un champ <span class="icon">＋</span>
@@ -53,14 +57,12 @@ import { useRouter } from 'vue-router';
 
 const formSections = ref([
   {
-    champs: [
-      { nom: 'Nom', type: 'text' },
-      { nom: 'Email', type: 'email' }
-    ]
+    champs: []
   }
 ]);
 
 const newChampName = ref('');
+const newChampPlaceholder = ref('');
 const router = useRouter();
 
 // Ajout des variables pour la liste des salons et le salon sélectionné
@@ -77,9 +79,11 @@ function addChamp(sectionIndex) {
   if (newChampName.value.trim() !== '') {
     formSections.value[sectionIndex].champs.push({
       nom: newChampName.value,
-      type: 'text' // Vous pouvez ajuster le type selon vos besoins
+      type: 'text', // Vous pouvez ajuster le type selon vos besoins
+      placeholder: newChampPlaceholder.value // Ajouter le placeholder
     });
     newChampName.value = ''; // Réinitialiser le nom du champ après ajout
+    newChampPlaceholder.value = ''; // Réinitialiser le placeholder après ajout
   }
 }
 
@@ -91,35 +95,55 @@ function removeChamp(sectionIndex, champIndex) {
   formSections.value[sectionIndex].champs.splice(champIndex, 1);
 }
 
-function saveForm() {
-  const formulaireData = {
-    actif: true, // Par défaut, le formulaire est actif
-    salon: `/api/salons/${selectedSalon.value}`,
-    champs: formSections.value.flatMap(section =>
-      section.champs.map(champ => ({
-        nom: champ.nom,
-        type: champ.type
-      }))
-    )
-  };
+async function saveForm() {
+  try {
+    // Créer les champs
+    const champIds = [];
+    for (const section of formSections.value) {
+      for (const champ of section.champs) {
+        const response = await doAjaxRequest('/rest/createChamp', {
+          method: 'POST',
+          body: JSON.stringify(champ),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        champIds.push(response.idChamp);
+      }
+    }
 
-  const options = {
-    method: 'POST',
-    body: JSON.stringify(formulaireData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+    // Créer le formulaire
+    const formulaireData = {
+      actif: true,
+      salon: {idSalon: selectedSalon.value}, // Envoyer uniquement l'ID du salon
+    };
 
-  // Afficher les données qui seront envoyées dans la requête POST
-  console.log('Données envoyées dans la requête POST :', JSON.stringify(formulaireData, null, 2));
+    const formulaireResponse = await doAjaxRequest('/rest/createFormulaire', {
+      method: 'POST',
+      body: JSON.stringify(formulaireData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-  doAjaxRequest('/api/formulaires', options)
-    .then((result) => {
-      console.log('Formulaire enregistré :', result);
-      router.push('/formulaire-valide');
-    })
-    .catch((error) => alert(error.message));
+    const formulaireId = formulaireResponse.idForm;
+
+    // Créer les relations Contient
+    for (const champId of champIds) {
+      await doAjaxRequest('/rest/createContient', {
+        method: 'POST',
+        body: JSON.stringify({champId, formulaireId}),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
+
+    console.log('Formulaire et champs enregistrés avec succès');
+    router.push('/formulaire-valide');
+  } catch (error) {
+    alert('Erreur lors de l\'enregistrement du formulaire : ' + error.message);
+  }
 }
 
 // Ajout de la fonction pour récupérer les salons
@@ -249,7 +273,4 @@ button:hover {
   background-color: #2f2769;
   margin-top: 15px;
 }
-
-
-
 </style>

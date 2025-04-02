@@ -16,6 +16,11 @@ public class FormulaireService {
     }
 
     @Transactional
+    public Formulaire createFormulaire(Formulaire formulaire) {
+        return formulaireDao.save(formulaire);
+    }
+
+    @Transactional
     public List<Formulaire> formulairesActifs() {
         return formulaireDao.formulairesActifs();
     }

@@ -1,9 +1,6 @@
 package isis.projet.backend.controller;
 
-import isis.projet.backend.entity.Champ;
-import isis.projet.backend.entity.Formulaire;
-import isis.projet.backend.entity.Prospect;
-import isis.projet.backend.entity.Salon;
+import isis.projet.backend.entity.*;
 import isis.projet.backend.service.*;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +19,9 @@ public class SimpleController {
     private final SalonService salonService;
     private final InfoService infoService;
     private final SuivieService suivieService;
+    private final ChampService champService;
 
-    public SimpleController(CountryService countryService, FormulaireService formulaireService, ContientService contientService, ProspectService prospectService, SalonService salonService, InfoService infoService, SuivieService suivieService) {
+    public SimpleController(CountryService countryService, FormulaireService formulaireService, ContientService contientService, ProspectService prospectService, SalonService salonService, InfoService infoService, SuivieService suivieService, ChampService champService) {
         this.countryService = countryService;
         this.formulaireService = formulaireService;
         this.contientService = contientService;
@@ -31,6 +29,7 @@ public class SimpleController {
         this.salonService = salonService;
         this.infoService = infoService;
         this.suivieService = suivieService;
+        this.champService = champService;
     }
 
     @GetMapping("/hello")
@@ -139,6 +138,33 @@ public class SimpleController {
     public List<Integer> getAvailableYears() {
         log.info("Service getAvailableYears");
         return prospectService.getAvailableYears();
+    }
+
+    @PostMapping("/createFormulaire")
+    public Formulaire createFormulaire(@RequestBody Formulaire formulaire) {
+        log.info("Creating formulaire");
+        return formulaireService.createFormulaire(formulaire);
+    }
+
+    @PostMapping("/createChamp")
+    public Champ createChamp(@RequestBody Champ champ) {
+        log.info("Creating champ");
+        return champService.createChamp(champ);
+    }
+
+    @PostMapping("/createContient")
+    public Contient createContient(@RequestBody Map<String, Integer> request) {
+        Integer champId = request.get("champId");
+        Integer formulaireId = request.get("formulaireId");
+
+        Champ champ = new Champ();
+        champ.setIdChamp(champId);
+
+        Formulaire formulaire = new Formulaire();
+        formulaire.setIdForm(formulaireId);
+
+        log.info("Creating contient");
+        return contientService.createContient(champ, formulaire);
     }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <v-btn @click="downloadCSV" color="primary">Télécharger les statistiques en CSV</v-btn>
+  <v-btn @click="downloadCSV" color="primary">Télécharger les données en CSV</v-btn>
 </template>
 
 <script setup>
@@ -38,7 +38,7 @@ function downloadCSV() {
   const a = document.createElement('a');
   a.setAttribute('hidden', '');
   a.setAttribute('href', url);
-  a.setAttribute('download', 'statistiques_generales.csv');
+  a.setAttribute('download', 'listeDeProspects.csv');
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
