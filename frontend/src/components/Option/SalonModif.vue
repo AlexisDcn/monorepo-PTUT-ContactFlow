@@ -7,6 +7,17 @@ const selectedSalon = ref(null);
 const editing = ref(false);
 const editedName = ref("");
 
+const ajouter = ref(false);
+
+
+let data = reactive({
+  // Les données saisies dans le formulaire
+  formulaire: {
+    nom : "",
+    date : "",
+    archive : ""},
+})
+
 function getSalon() {
   let premierTour = false;
   doAjaxRequest('/api/salons')
@@ -83,6 +94,13 @@ function deleteSalon(id) {
     .catch((error) => alert(error.message));
 }
 
+function handleAjoutAffich(){
+  ajouter.value = !ajouter.value
+}
+
+function ajouteSalon(){
+  console.log(data.formulaire);
+}
 
 onMounted(() => getSalon())
 </script>
@@ -102,6 +120,16 @@ onMounted(() => getSalon())
     <button @click="handleModif">Modifier</button>
     <button @click="handleArchivage">Archiver</button>
     <button @click="handleDelete">Supprimer</button>
+    <button @click="handleAjoutAffich">Ajouter</button>
+  </div>
+  <div v-if="ajouter">
+    <form @submit.prevent="ajouteSalon">
+      <input v-model="data.formulaire.nom" type="text" placeholder="Nom du salon">
+      <input v-model="data.formulaire.date" type="date">
+      <input type="checkbox" v-model="data.formulaire.archive"> Archiver ?
+      <button type="submit">Ajouter</button>
+      <button @click="handleAjoutAffich"> Annuler</button>
+    </form>
   </div>
 </template>
 
