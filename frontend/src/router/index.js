@@ -13,16 +13,16 @@ import LoginView from "@/views/LoginView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', name: 'choixform', component: ChoixFormuView },
-    { path: '/formulaire/:idSalon', name: 'form', component: () => import('@/views/FormulaireView/[id].vue') },
-    { path: '/admin', name: 'admin', component: AdminAccueilView, meta: { requiresAuth: true } },
-    { path: '/statistiques-generales', name: 'statistiques-generales', component: AdminStatistiquesGeneView, meta: { requiresAuth: true } },
-    { path: '/graphique-evolutif', name: 'graphique-evolutif', component: AdminGraphiqueEvolutifView, meta: { requiresAuth: true } },
-    { path: '/ajouter-des-options', name: 'ajouter-des-options', component: AdminOptionsFormuView, meta: { requiresAuth: true } },
-    { path: '/formulaire-valide', name: 'formulaire-valide', component: FormuValidView },
-    { path: '/creation-formu', name: 'creation-formu', component: AdminCreationFormuView, meta: { requiresAuth: true } },
-    { path: '/visualisation-formu', name: 'visualisation-formu', component: AdminVisualisationFormuView, meta: { requiresAuth: true } },
-    { path: '/login', name: 'login', component: LoginView },
+    { path: '/public/home', name: 'choixform', component: ChoixFormuView },
+    { path: '/public/formulaire/:idSalon', name: 'form', component: () => import('@/views/FormulaireView/[id].vue') },
+    { path: '/admin/home', name: 'admin', component: AdminAccueilView, meta: { requiresAuth: true } },
+    { path: '/admin/statistiques-generales', name: 'statistiques-generales', component: AdminStatistiquesGeneView, meta: { requiresAuth: true } },
+    { path: '/admin/graphique-evolutif', name: 'graphique-evolutif', component: AdminGraphiqueEvolutifView, meta: { requiresAuth: true } },
+    { path: '/admin/ajouter-des-options', name: 'ajouter-des-options', component: AdminOptionsFormuView, meta: { requiresAuth: true } },
+    { path: '/admin/formulaire-valide', name: 'formulaire-valide', component: FormuValidView },
+    { path: '/admin/creation-formu', name: 'creation-formu', component: AdminCreationFormuView, meta: { requiresAuth: true } },
+    { path: '/admin/visualisation-formu', name: 'visualisation-formu', component: AdminVisualisationFormuView, meta: { requiresAuth: true } },
+    { path: '/public/login', name: 'login', component: LoginView },
   ],
 });
 

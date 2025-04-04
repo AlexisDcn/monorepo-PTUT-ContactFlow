@@ -20,10 +20,10 @@ function login() {
   // Logique de connexion
   console.log('Connexion...');
   // Rediriger vers la page de connexion ou une autre page après la déconnexion
-  router.push('/admin');
+  router.push('/admin/home');
 }
 function goHome() {
-  router.push('/');
+  router.push('/public/home');
 }
 </script>
 
