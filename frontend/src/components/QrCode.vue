@@ -14,6 +14,17 @@
     </div>
 
     <div class="form-group">
+      <label for="fileName">Nom du fichier:</label>
+      <input
+        type="text"
+        id="fileName"
+        v-model="fileName"
+        class="form-control"
+        placeholder="mon-qr-code"
+      >
+    </div>
+
+    <div class="form-group">
       <label for="format">Format d'image:</label>
       <select id="format" v-model="format" class="form-control">
         <option value="png">PNG</option>
@@ -47,56 +58,52 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue';
 import axios from 'axios';
 
-export default {
-  name: 'QRCodeGenerator',
-  data() {
-    return {
-      url: '',
-      format: 'png',
-      size: 250,
-      previewUrl: null,
-      qrCodeBlob: null
-    };
-  },
-  computed: {
-    isValidUrl() {
-      return this.url.trim() !== '';
-    }
-  },
-  methods: {
-    async generateQRCode() {
-      if (!this.isValidUrl) return;
-      try {
-        const response = await axios.post('/api/qrcode/generate', {
-          url: this.url,
-          format: this.format,
-          size: this.size
-        }, {
-          responseType: 'blob'
-        });
+const url = ref('');
+const fileName = ref('mon-qr-code');
+const format = ref('png');
+const size = ref(250);
+const previewUrl = ref(null);
+const qrCodeBlob = ref(null);
 
-        const blob = new Blob([response.data], {
-          type: this.format === 'png' ? 'image/png' : 'image/jpeg'
-        });
-        this.qrCodeBlob = blob;
-        this.previewUrl = URL.createObjectURL(blob);
-      } catch (error) {
-        console.error('Erreur lors de la génération du QR code:', error);
-        alert('Une erreur est survenue lors de la génération du QR code.');
-      }
-    },
-    downloadQRCode() {
-      if (!this.qrCodeBlob) return;
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(this.qrCodeBlob);
-      link.download = `qrcode.${this.format}`;
-      link.click();
-    }
+const isValidUrl = computed(() => url.value.trim() !== '');
+const finalFileName = computed(() => fileName.value.trim() || 'qr-code');
+
+async function generateQRCode() {
+  if (!isValidUrl.value) return;
+
+  try {
+    const response = await axios.post('/api/qrcode/generate', {
+      url: url.value,
+      fileName: finalFileName.value,
+      format: format.value,
+      size: size.value
+    }, {
+      responseType: 'blob'
+    });
+
+    const blob = new Blob([response.data], {
+      type: format.value === 'png' ? 'image/png' : 'image/jpeg'
+    });
+    qrCodeBlob.value = blob;
+    previewUrl.value = URL.createObjectURL(blob);
+  } catch (error) {
+    console.error('Erreur lors de la génération du QR code:', error);
+    alert('Une erreur est survenue lors de la génération du QR code.');
   }
-};
+}
+
+function downloadQRCode() {
+  if (!qrCodeBlob.value) return;
+
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(qrCodeBlob.value);
+  link.download = `${finalFileName.value}.${format.value}`;
+  link.click();
+}
 </script>
 
 <style scoped>
