@@ -16,15 +16,20 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { getAuth, signOut } from 'firebase/auth';
 
 const router = useRouter();
 
 function logout() {
-  // Logique de déconnexion
-  console.log('Déconnexion...');
-  // Rediriger vers la page de connexion ou une autre page après la déconnexion
-  router.push('/');
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    console.log('Déconnecté avec succès');
+    router.push('/login'); // Redirige vers la page de connexion
+  }).catch((error) => {
+    console.error('Erreur lors de la déconnexion:', error);
+  });
 }
+
 function goHome() {
   router.push('/');
 }
