@@ -5,7 +5,6 @@
 import doAjaxRequest from "@/util/util.js";
 import {onMounted} from "vue";
 import SalonModif from "@/components/Option/SalonModif.vue";
-import ChampModif from "@/components/Option/ChampModif.vue";
 import FormationModif from "@/components/Option/FormationModif.vue";
 
 function getFormations(){
@@ -34,7 +33,6 @@ onMounted(()=>{
 <template>
   <SalonModif/>
   <FormationModif/>
-  <ChampModif/>
 </template>
 
 <style scoped>

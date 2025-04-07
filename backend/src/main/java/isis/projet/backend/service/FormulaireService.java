@@ -36,5 +36,10 @@ public class FormulaireService {
         formulaireDao.desactiverForm(salon);
     }
 
+    @Transactional
+    public String getSalonNom(Integer idSalon) {
+        return formulaireDao.getSalonNom(idSalon);
+    }
+
 }
 

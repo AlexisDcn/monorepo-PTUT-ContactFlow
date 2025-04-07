@@ -175,6 +175,11 @@ public class SimpleController {
         log.info("Creating contient");
         return contientService.createContient(champ, formulaire);
     }
+
+    @GetMapping("/getSalonNom/{idSalon}")
+    public String getSalonNom(@PathVariable("idSalon") Integer idSalon) {
+        return formulaireService.getSalonNom(idSalon);
+    }
 }
 
 

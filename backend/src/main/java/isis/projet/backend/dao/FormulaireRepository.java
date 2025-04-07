@@ -19,4 +19,7 @@ public interface FormulaireRepository extends JpaRepository<Formulaire, Integer>
     @Modifying
     @Query ("UPDATE Formulaire f SET f.actif = CASE WHEN f.actif = true THEN false ELSE true END WHERE f.salon.idSalon = :idSalon")
     void desactiverForm (Integer idSalon);
+
+    @Query("SELECT s.nom FROM Salon s WHERE s.idSalon = :idSalon")
+    String getSalonNom(Integer idSalon);
 }
