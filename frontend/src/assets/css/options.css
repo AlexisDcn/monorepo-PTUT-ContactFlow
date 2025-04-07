@@ -1,0 +1,144 @@
+/* Style commun pour les composants d'options */
+h3 {
+    color: #5e4aa0;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* Conteneurs principaux */
+.option-container {
+    background-color: #5e4aa0;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.option-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background-color: #5e4aa0;
+    border-radius: 2rem;
+    margin-bottom: 1rem;
+}
+
+.option-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+/* Select */
+select {
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+    border: none;
+    width: 100%;
+    max-width: 300px;
+    margin-right: 1rem;
+    font-size: 1rem;
+    outline: none;
+}
+
+/* Buttons */
+button {
+    background-color: #3c327b;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.2rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #332769;
+}
+
+button.btn-delete {
+    background-color: #6c3c76;
+}
+
+button.btn-add {
+    background-color: #ED6962;
+}
+
+button.btn-modifier {
+    display: flex;
+    align-items: center;
+}
+
+button.btn-modifier svg {
+    margin-right: 0.3rem;
+}
+
+/* Form styles */
+form {
+    margin-top: 1rem;
+}
+
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+input[type="checkbox"] {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-label {
+    color: white;
+    margin-right: 1rem;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Form container */
+.form-container {
+    margin-top: 1rem;
+}
+
+/* Action buttons container */
+.action-buttons {
+    display: flex;
+    margin-top: 0.5rem;
+}
+
+/* Edit mode */
+.edit-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.edit-container input {
+    flex: 1;
+    margin-right: 0.5rem;
+    margin-bottom: 0;
+}
+
+/* Icons */
+.icon-edit, .icon-delete {
+    margin-right: 0.3rem;
+}
+
+/* Component spacing */
+.component-section {
+    margin-bottom: 2.5rem;
+}
