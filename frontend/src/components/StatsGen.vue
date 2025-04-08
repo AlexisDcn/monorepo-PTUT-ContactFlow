@@ -112,7 +112,7 @@
       </div>
 
       <div>
-        Affichage de {{ startItem }}-{{ endItem + 1 }} sur {{ totalItems + 1 }} éléments
+        Affichage de {{ startItem }}-{{ endItem }} sur {{ totalItems }} éléments
       </div>
     </div>
   </div>
