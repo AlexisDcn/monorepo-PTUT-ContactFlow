@@ -6,9 +6,10 @@
     <v-spacer></v-spacer>
 
     <v-btn text to="/admin">Accueil Admin</v-btn>
-    <v-btn text to="/statistiques-generales">Liste prospects</v-btn>
+    <v-btn text to="/graphique-evolutif">Graphiques</v-btn>
+    <v-btn text to="/statistiques-generales">Prospects</v-btn>
     <v-btn text to="/creation-formu">Création de formulaire</v-btn>
-    <v-btn text to="/visualisation-formu">Formulaires en cours</v-btn>
+    <v-btn text to="/visualisation-formu">Formulaires</v-btn>
     <v-btn text to="/ajouter-des-options">Options</v-btn>
     <v-btn text @click="logout">Se déconnecter</v-btn>
   </v-app-bar>
