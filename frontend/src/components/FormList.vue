@@ -111,10 +111,6 @@ onMounted(() => {
   border-bottom: 1px solid #ddd;
 }
 
-.data-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
 
 .status {
   padding: 6px 12px;
@@ -130,5 +126,17 @@ onMounted(() => {
 .archived {
   background-color: #f8f9fa;
   color: #6c757d;
+}
+.data-table thead {
+  background-color: #5F4E9B !important;
+}
+
+.data-table th {
+  padding: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: 1px solid #4a3d7c;
+  position: relative;
 }
 </style>

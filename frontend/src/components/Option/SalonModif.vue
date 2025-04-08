@@ -162,6 +162,7 @@ onMounted(() => getSalon())
         </option>
       </select>
       <div class="action-buttons">
+        <button @click="handleArchive">Archiver</button>
         <button class="btn-modifier" @click="handleModifAffich">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -171,7 +172,7 @@ onMounted(() => getSalon())
           </svg>
           Modifier
         </button>
-        <button @click="handleArchive">Archiver</button>
+
         <button class="btn-delete" @click="handleDelete">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

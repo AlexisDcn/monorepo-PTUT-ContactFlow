@@ -1,14 +1,23 @@
 /* Style commun pour les composants d'options */
 h3 {
-    color: #5e4aa0;
+    color: white;
     font-size: 1.5rem;
     margin-bottom: 1rem;
     font-weight: 600;
 }
 
 /* Conteneurs principaux */
+.options-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #5f4e9b;
+    border-radius: 1rem;
+    color: white;
+}
+
 .option-container {
-    background-color: #5e4aa0;
+    background-color: #5f4e9b;
     border-radius: 1rem;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
@@ -20,9 +29,10 @@ h3 {
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem 1rem;
-    background-color: #5e4aa0;
+    background-color: #5f4e9b;
     border-radius: 2rem;
     margin-bottom: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .option-title {
@@ -42,11 +52,13 @@ select {
     margin-right: 1rem;
     font-size: 1rem;
     outline: none;
+    background-color: white;
+    color: #333;
 }
 
 /* Buttons */
 button {
-    background-color: #3c327b;
+    background-color: #453782;
     color: white;
     border: none;
     border-radius: 2rem;
@@ -55,18 +67,27 @@ button {
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-    background-color: #332769;
+    background-color: #3a2e6e;
 }
 
 button.btn-delete {
     background-color: #6c3c76;
 }
 
+button.btn-delete:hover {
+    background-color: #5c3364;
+}
+
 button.btn-add {
-    background-color: #ED6962;
+    background-color: #ed6962;
+}
+
+button.btn-add:hover {
+    background-color: #e3554e;
 }
 
 button.btn-modifier {
@@ -81,6 +102,9 @@ button.btn-modifier svg {
 /* Form styles */
 form {
     margin-top: 1rem;
+    padding: 1rem;
+    background-color: #534288;
+    border-radius: 1rem;
 }
 
 input[type="text"],
@@ -91,11 +115,14 @@ input[type="date"] {
     border-radius: 2rem;
     margin-bottom: 1rem;
     font-size: 1rem;
+    background-color: white;
+    color: #333;
 }
 
 input[type="checkbox"] {
     margin-right: 0.5rem;
     cursor: pointer;
+    transform: scale(1.2);
 }
 
 .checkbox-label {
@@ -118,6 +145,11 @@ input[type="checkbox"] {
 .action-buttons {
     display: flex;
     margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.action-buttons button {
+    margin-bottom: 0.5rem;
 }
 
 /* Edit mode */
@@ -125,6 +157,9 @@ input[type="checkbox"] {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
+    background-color: #534288;
+    padding: 1rem;
+    border-radius: 1rem;
 }
 
 .edit-container input {
@@ -141,4 +176,26 @@ input[type="checkbox"] {
 /* Component spacing */
 .component-section {
     margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background-color: #534288;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+    .option-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    select {
+        max-width: 100%;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+
+    .action-buttons {
+        justify-content: center;
+    }
 }
