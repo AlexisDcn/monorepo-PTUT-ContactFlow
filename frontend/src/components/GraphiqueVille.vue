@@ -1,7 +1,6 @@
 <template>
-  <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
   <v-container>
-    <h1>Graphique évolutif</h1>
+    <h1>Graphique évolutif par ville</h1>
     <VueApexCharts :options="chartOptions" :series="chartOptions.series" />
   </v-container>
 

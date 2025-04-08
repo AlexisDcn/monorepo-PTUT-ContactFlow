@@ -42,7 +42,6 @@ onMounted(()=>
 </script>
 
 <template>
-  <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
   <v-container>
     <h1>Graphique évolutif par année</h1>
     <VueApexCharts :options="chartOptions" :series="chartOptions.series" />
