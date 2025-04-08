@@ -2,7 +2,6 @@
   <AdminHeader />
   <BoutonRetour />
   <v-container>
-    <h1>Ajouter des options</h1>
     <OptionComponent/>
   </v-container>
 </template>
