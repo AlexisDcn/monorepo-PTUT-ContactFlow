@@ -18,11 +18,17 @@ public interface ProspectRepository extends JpaRepository<Prospect, Integer> {
     @Query("SELECT YEAR(s.date) as annee, COUNT(p) FROM Prospect p JOIN p.salon s GROUP BY YEAR(s.date)")
     List<Object[]> countProspectsByYear();
 
+    @Query("SELECT p.ville as ville, COUNT(p) FROM Prospect p GROUP BY p.ville")
+    List<Object[]> prospectVille();
+
     @Query("SELECT p FROM Prospect p JOIN p.salon s WHERE YEAR(s.date) = :year")
     List<Prospect> findProspectsByYear(Integer year);
 
     @Query("SELECT DISTINCT YEAR(s.date) FROM Salon s ORDER BY YEAR(s.date)")
     List<Integer> findDistinctYears();
+
+    @Query("SELECT DISTINCT p.ville FROM Prospect p")
+    List<String> getVilles();
 
     @Modifying
     @Query("DELETE FROM Prospect p WHERE p.salon.idSalon = :idSalon")

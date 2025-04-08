@@ -66,7 +66,6 @@ public class ProspectService {
         return prospectDao.prospectSalonGlobalNom(idSalon);
     }
 
-
     @Transactional
     public List<Prospect> getProspectsByYear(Integer year) {
         return prospectDao.findProspectsByYear(year);
@@ -75,5 +74,22 @@ public class ProspectService {
     @Transactional
     public List<Integer> getAvailableYears() {
         return prospectDao.findDistinctYears();
+    }
+
+    @Transactional
+    public List<String> getVilles() {return prospectDao.getVilles();}
+
+    @Transactional
+    public Map<String, Integer> prospectVille() {
+        List<Object[]> results = prospectDao.prospectVille();
+        Map<String, Integer> dataVille = new HashMap<>();
+
+        for (Object[] row : results) {
+            String ville = String.valueOf(row[0]); // Récup la ville
+            Integer count = ((Number) row[1]).intValue(); // Récup le nb de pers
+            dataVille.put(ville, count);
+        }
+
+        return dataVille;
     }
 }

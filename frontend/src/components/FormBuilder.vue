@@ -32,6 +32,7 @@
           type="text"
           placeholder="Placeholder du champ"
         />
+        <input v-model="newChampDefaut" type="hidden">
         <button @click="addChamp" class="add-field-btn">
           Ajouter un champ <span class="icon">＋</span>
         </button>
@@ -62,10 +63,12 @@ function addChamp() {
     formChamps.value.push({
       nom: newChampName.value,
       type: 'text',
-      placeholders: newChampPlaceholder.value
+      placeholders: newChampPlaceholder.value,
+      defaut : false
     });
     newChampName.value = '';
     newChampPlaceholder.value = '';
+    newChampDefaut.value = false;
   }
 }
 

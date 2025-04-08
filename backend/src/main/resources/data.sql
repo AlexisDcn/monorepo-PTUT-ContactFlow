@@ -16,10 +16,10 @@ INSERT INTO Formation(id, nom) VALUES
                                    (3, 'Gestion');
 ALTER TABLE Formation ALTER COLUMN id RESTART WITH 4;
 
-INSERT INTO Champ(id_champ, type, nom, placeholders) VALUES
-                                                    (1, 'text', 'nom' ,'Entrez votre nom'),
-                                                    (2, 'number', 'code_postal' , 'Entrez votre âge'),
-                                                    (3, 'email', 'mail' ,'Entrez votre adresse mail');
+INSERT INTO Champ(id_champ, type, nom, placeholders, defaut) VALUES
+                                                    (1, 'text', 'nom' ,'Entrez votre nom', true),
+                                                    (2, 'number', 'code_postal' , 'Entrez votre âge', true),
+                                                    (3, 'email', 'mail' ,'Entrez votre adresse mail', true);
 ALTER TABLE Champ ALTER COLUMN id_champ RESTART WITH 4;
 
 INSERT INTO Salon(id_salon, nom, archive, date) VALUES
@@ -38,7 +38,7 @@ ALTER TABLE Prospect ALTER COLUMN id_prospect RESTART WITH 5;
 
 INSERT INTO Formulaire(id_form, actif, id_salon) VALUES
                                                      (1, TRUE, 1),
-                                                     (2, FALSE, 2),
+                                                     (2, TRUE, 2),
                                                      (3, TRUE, 3);
 ALTER TABLE Formulaire ALTER COLUMN id_form RESTART WITH 4;
 

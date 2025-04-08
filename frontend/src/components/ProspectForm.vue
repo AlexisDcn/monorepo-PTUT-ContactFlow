@@ -15,12 +15,10 @@
           />
 
           <!-- Champ de type select (dropdown) -->
-          <select
-            v-else
-            class="champ dropdown"
-            v-model="data.formulaire[champ.nom]"
-          >
-            <option value="" disabled selected>{{ champ.placeholder || champ.placeholders }}</option>
+          <select v-else class="champ dropdown" v-model="data.formulaire[champ.nom]">
+            <option value="" disabled selected>
+              {{ champ.placeholder || champ.placeholders }}
+            </option>
             <option v-for="option in champ.options" :value="option.value" :key="option.value">
               {{ option.label }}
             </option>
@@ -47,11 +45,108 @@ const props = defineProps(["idSalon", "idForm"]);
 let data = reactive({
   // Les données saisies dans le formulaire
   formulaire: { salon: `/api/salons/${parseInt(props.idSalon)}` },
+  info : {},
   prospects: [],
   champs: []
 })
 
 function ajouteProspect() {
+  ajoutInfoDefaut();
+}
+
+// function ajoutInfo(prospect){
+//
+//   data.info.idProspect.value = prospect.id;
+//
+//   const options = {
+//     method: 'POST',
+//     body : JSON.stringify(data.info),
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   }
+//
+//   console.log(JSON.stringify(data.info))
+//
+//   doAjaxRequest('/api/infoes', options)
+//     .then((result) => {
+//       console.log('Info ajouté :', result)
+//       getProspect()
+//       router.push('/formulaire-valide');
+//     })
+//     .catch((error) => alert(error.message))
+// }
+
+/*
+function ajoutInfo(prospect) {
+  let infoToSend = {};
+
+  for (let champ of data.champs) {
+    if (!champ.defaut){
+      let valeurChamp = data.formulaire[champ.nom]; // Valeur entrée par l'utilisateur
+
+      infoToSend[champ.nom] = {
+        idchamp: champ.idChamp,
+        idprospect: prospect.id,
+        value: valeurChamp,
+      };
+    }
+  }
+
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(infoToSend),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  console.log(JSON.stringify(infoToSend));
+
+  doAjaxRequest('/rest/ajoutInfo', options)
+    .then((result) => {
+      console.log('Info ajouté :', result);
+      getProspect();
+      router.push('/formulaire-valide');
+    })
+    .catch((error) => alert(error.message));
+}
+*/
+function ajoutInfo(prospect) {
+  let infoToSend = []; // On construit un tableau au lieu d'un objet unique
+
+  for (let champ of data.champs) {
+    let valeurChamp = data.formulaire[champ.nom];
+
+    // Pousser chaque objet dans le tableau
+    infoToSend.push({
+      idChamp: champ.idChamp,
+      idProspect: prospect.idProspect,
+      value: valeurChamp,
+    });
+  }
+
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(infoToSend), // ENVOI D'UN TABLEAU []
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  console.log("Données envoyées :", JSON.stringify(infoToSend));
+
+  doAjaxRequest('/rest/ajoutInfo', options)
+    .then((result) => {
+      console.log('Info ajouté :', result);
+      getProspect();
+      router.push('/formulaire-valide');
+    })
+    .catch((error) => alert(error.message));
+}
+
+
+function ajoutInfoDefaut(){
   const options = {
     method: 'POST',
     body: JSON.stringify(data.formulaire),
@@ -59,14 +154,15 @@ function ajouteProspect() {
       'Content-Type': 'application/json',
     },
   }
+
   console.log(JSON.stringify(data.formulaire))
 
   // On appelle l'API REST générée par les repositories Spring Data REST
   doAjaxRequest('/api/prospects', options)
     .then((result) => {
       console.log('Prospect ajouté :', result)
+      ajoutInfo(result)
       getProspect()
-      router.push('/formulaire-valide');
     })
     .catch((error) => alert(error.message))
 }
@@ -87,6 +183,11 @@ function getChampFormu(idForm) {
 
       // Création du dico qui permet l'envoi des données
       for (let elmnt of data.champs) {
+        if (elmnt.defaut == false){
+          if (!data.info[elmnt.nom]) {
+            data.info[elmnt.nom] ="";
+          }
+        }
         // Vérifie que l'entrée du dictionnaire n'existe pas avant de la créer
         if (!data.formulaire[elmnt.nom]) {
           data.formulaire[elmnt.nom] = ""
@@ -108,19 +209,12 @@ function getChampFormu(idForm) {
     .catch((error) => alert(error.message))
 }
 
-function getFormInfo(idForm) {
-  doAjaxRequest(`/api/formulaires/${idForm}`)
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => alert(error.message))
-}
-
 // Appeler les fonctions au chargement du composant
 onMounted(() => {
   getProspect()
-  getChampFormu(parseInt(props.idSalon))
+  getChampFormu(parseInt(props.idForm))
   console.log("test", props)
+  console.log(data.formulaire, data.info);
 })
 </script>
 

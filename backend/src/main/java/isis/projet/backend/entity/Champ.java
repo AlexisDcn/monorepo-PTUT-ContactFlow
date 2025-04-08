@@ -16,4 +16,5 @@ public class Champ {
     private String type;
     private String nom;
     private String placeholders;
+    private Boolean defaut;
 }

@@ -5,6 +5,7 @@ import isis.projet.backend.service.*;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -179,6 +180,51 @@ public class SimpleController {
     @GetMapping("/getSalonNom/{idSalon}")
     public String getSalonNom(@PathVariable("idSalon") Integer idSalon) {
         return formulaireService.getSalonNom(idSalon);
+    }
+
+    @PostMapping("/ajoutInfo")
+    public List<Info> createInfo(@RequestBody List<Map<String, Object>> requestList) {
+        List<Info> infos = new ArrayList<>();
+
+        log.info("Bite");
+        log.info(requestList.toString());
+
+        for (Map<String, Object> request : requestList) {
+
+            Integer champId = (Integer) request.get("idChamp");
+            Integer prospectId = (Integer) request.get("idProspect");
+            String valeur = (String) request.get("value"); // Si `value` est un texte
+
+            Champ champ = new Champ();
+            champ.setIdChamp(champId);
+
+            Prospect prospect = new Prospect();
+            prospect.setIdProspect(prospectId);
+
+            log.info("Creating info for Champ ID: " + champId + ", Prospect ID: " + prospectId);
+
+            Info newInfo = infoService.createInfo(champ, prospect, valeur); // Assurez-vous que `createInfo` accepte `value`
+            infos.add(newInfo);
+        }
+
+        return infos;
+    }
+
+    @GetMapping("/getVille")
+    public List<String> getVilles() {
+        return prospectService.getVilles();
+    }
+
+
+    @GetMapping("/getPersonneParVille")
+    public Map<String, Map<String, Integer>> getPersParVille() {
+        return Map.of("salon", prospectService.prospectVille());
+    }
+
+    @GetMapping("/getCountVille/{ville}")
+    public Integer getCountVille(@PathVariable("ville") String ville) {
+        Integer salut = 1;
+        return salut;
     }
 }
 

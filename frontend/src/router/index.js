@@ -18,7 +18,7 @@ const router = createRouter({
       component: ChoixFormuView,
     },
     {
-      path: '/formulaire/:idSalon',
+      path: '/formulaire/:idSalon&:idForm',
       name: 'form',
       component: () => import('@/views/FormulaireView/[id].vue'),
     },
