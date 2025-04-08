@@ -8,43 +8,54 @@ let data = reactive({
 
 let salonsMap = reactive({});
 
-function getFormData() {
-  doAjaxRequest('/api/formulaires')
-    .then((result) => {
-      // Réinitialiser le tableau avant d'ajouter de nouveaux formulaires
-      data.formulaires = [];
+async function getFormData() {
+  try {
+    const result = await doAjaxRequest('/api/formulaires');
 
-      // Ajout des formulaires
-      for (let formulaire of result._embedded.formulaires) {
-        // Extraire l'ID du salon à partir de l'URL
-        if (formulaire._links && formulaire._links.salon && formulaire._links.salon.href) {
-          const salonUrl = formulaire._links.salon.href;
-          const idSalon = extractIdFromUrl(salonUrl);
+    // Réinitialiser le tableau avant d'ajouter de nouveaux formulaires
+    data.formulaires = [];
 
-          // Attacher l'ID du salon au formulaire pour référence
-          formulaire.idSalon = idSalon;
+    // Ajout des formulaires
+    for (let formulaire of result._embedded.formulaires) {
+      // Extraire l'ID du salon à partir de l'URL
+      if (formulaire._links && formulaire._links.salon && formulaire._links.salon.href) {
+        const salonUrl = formulaire._links.salon.href;
+        // Attendre que l'ID soit extrait
+        const idSalon = await extractIdFromUrl(salonUrl);
 
-          // Récupérer les détails du salon
-          getSalonDetails(idSalon, formulaire.idForm);
-        }
+        // Attacher l'ID du salon au formulaire pour référence
+        formulaire.idSalon = idSalon;
 
-        data.formulaires.push(formulaire);
+        // Récupérer les détails du salon
+        getSalonDetails(idSalon, formulaire.idForm);
       }
-    })
-    .catch((error) => alert(error.message));
+
+      data.formulaires.push(formulaire);
+    }
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
-function extractIdFromUrl(url) {
-  const parts = url.split('/');
-  for (let i = 0; i < parts.length; i++) {
-    if (parts[i] === 'formulaires' && i + 1 < parts.length) {
-      return parts[i + 1];
-    }
+async function extractIdFromUrl(url) {
+  const parts = url.split('/api');
+  console.log(parts[1]);
+  const nvUrl = "/api" + parts[1];
+
+  try {
+    const result = await doAjaxRequest(nvUrl);
+    console.log(result);
+    console.log("blabla dans la requete", parseInt(result.idSalon));
+    return parseInt(result.idSalon);
+  } catch (error) {
+    console.error("Erreur lors de l'extraction de l'ID du salon:", error);
+    return null;
   }
-  return null;
 }
 
 function getSalonDetails(idSalon, idForm) {
+  console.log(idSalon);
+  console.log(idForm);
   doAjaxRequest(`/api/salons/${idSalon}`)
     .then((salonData) => {
       salonsMap[idForm] = salonData;
@@ -63,6 +74,7 @@ function getSalonName(formulaire) {
 }
 
 onMounted(() => {
+  extractIdFromUrl("/api/formulaires/4/salon");
   getFormData();
 });
 </script>
