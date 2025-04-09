@@ -164,7 +164,6 @@ onMounted(()=>
 <template>
   <v-container>
     <h1>Graphique évolutif par année</h1>
-    <VueApexCharts :options="chartOptions" :series="chartOptions.series" />
   </v-container>
 
     <div class="chart-wrapper">
@@ -189,8 +188,6 @@ onMounted(()=>
         </label>
       </div>
     </div>
-  </div>
-
 </template>
 
 
