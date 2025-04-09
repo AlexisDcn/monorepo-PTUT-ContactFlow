@@ -17,6 +17,10 @@ function boutonRetour() {
   margin: 16px;
 }
 
+.mb-4{
+  border-radius: 15px;
+}
+
 .mb-4:hover {
   transform: scale(1.02) !important;
   filter: brightness(0.9) !important;

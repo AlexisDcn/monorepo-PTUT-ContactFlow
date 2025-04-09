@@ -93,8 +93,6 @@ const chartOptions = {
     }
   },
 };
-
-
 function getPersonneParAnnee() {
   doAjaxRequest('/rest/getPersParAnnee')
     .then((result) => {
@@ -164,8 +162,10 @@ onMounted(()=>
 </script>
 
 <template>
-  <div class="page-container">
-    <h1 class="title">Graphique évolutif par année</h1>
+  <v-container>
+    <h1>Graphique évolutif par année</h1>
+    <VueApexCharts :options="chartOptions" :series="chartOptions.series" />
+  </v-container>
 
     <div class="chart-wrapper">
       <VueApexCharts
@@ -190,6 +190,7 @@ onMounted(()=>
       </div>
     </div>
   </div>
+
 </template>
 
 

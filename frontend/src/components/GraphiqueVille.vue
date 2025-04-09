@@ -1,6 +1,8 @@
 <template>
-  <div class="page-container">
-    <h1 class="title">Graphique évolutif par ville</h1>
+  <v-container>
+    <h1>Graphique évolutif par ville</h1>
+    <VueApexCharts :options="chartOptions" :series="chartOptions.series" />
+  </v-container>
 
     <div class="chart-wrapper">
       <VueApexCharts
