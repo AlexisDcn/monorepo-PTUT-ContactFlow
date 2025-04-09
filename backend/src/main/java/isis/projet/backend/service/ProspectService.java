@@ -6,6 +6,7 @@ import isis.projet.backend.entity.Salon;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,11 @@ public class ProspectService {
         }
 
         return data;
+    }
+
+    @Transactional
+    public Integer prospectAnneeSpe(String annee) {
+        return prospectDao.countProspectBySpeYear(annee);
     }
 
     @Transactional
@@ -91,5 +97,10 @@ public class ProspectService {
         }
 
         return dataVille;
+    }
+
+    @Transactional
+    public Integer prospectVilleSpe(String ville) {
+        return prospectDao.prospectVilleSpe(ville);
     }
 }

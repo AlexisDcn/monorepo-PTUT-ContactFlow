@@ -4,7 +4,10 @@ import isis.projet.backend.dao.SalonRepository;
 import isis.projet.backend.entity.Salon;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SalonService {
@@ -32,4 +35,15 @@ public class SalonService {
     public void modifNom(Integer salon, String nvNom) {
         salonDao.modifNom(salon, nvNom);
     }
+
+    @Transactional
+    public List<String> getDate() {
+        List<LocalDate> dates = salonDao.getDate();
+
+        List<String> annees = dates.stream()
+                .map(date -> String.valueOf(date.getYear())).distinct().collect(Collectors.toList());
+
+        return annees;
+    }
+
 }

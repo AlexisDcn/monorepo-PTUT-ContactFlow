@@ -223,8 +223,17 @@ public class SimpleController {
 
     @GetMapping("/getCountVille/{ville}")
     public Integer getCountVille(@PathVariable("ville") String ville) {
-        Integer salut = 1;
-        return salut;
+        return prospectService.prospectVilleSpe(ville);
+    }
+
+    @GetMapping("/getCountAnnee/{annee}")
+    public Integer getCountAnnee(@PathVariable("annee") String annee) {
+        return prospectService.prospectAnneeSpe(annee);
+    }
+
+    @GetMapping("/getDate")
+    public List<String> getDate() {
+        return salonService.getDate();
     }
 }
 

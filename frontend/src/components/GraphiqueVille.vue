@@ -1,22 +1,30 @@
 <template>
-  <v-btn @click="boutonRetour" color="4" class="mb-4">Retour</v-btn>
-  <v-container>
-    <h1>Graphique évolutif</h1>
-    <VueApexCharts :options="chartOptions" :series="chartOptions.series" />
-  </v-container>
+  <div class="page-container">
+    <h1 class="title">Graphique évolutif par ville</h1>
 
-  <div>
-    <label v-for="ville in listVille" :key="ville" style="display: block; margin-bottom: 8px;">
-      <input
-        type="checkbox"
-        :value="ville"
-        v-model="selectedVilles"
-        @change="handleClick(ville)"
+    <div class="chart-wrapper">
+      <VueApexCharts
+        class="chart"
+        :options="chartOptions"
+        :series="chartOptions.series"
       />
-      {{ ville }}
-    </label>
-  </div>
+    </div>
 
+    <div class="checkbox-container">
+      <div class="filter-label">Filtrer par ville :</div>
+      <div class="checkbox-group">
+        <label v-for="ville in listVille" :key="ville" class="checkbox-label">
+          <input
+            type="checkbox"
+            :value="ville"
+            v-model="selectedVilles"
+            @change="handleClick(ville)"
+          />
+          {{ ville }}
+        </label>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -32,9 +40,83 @@ const listVille = reactive([]);
 const selectedVilles = ref([]);
 
 const chartOptions = {
-  chart: { type: "bar" },
+  chart: {
+    type: "bar",
+    fontFamily: 'Arial, sans-serif',
+    background: 'transparent',
+    toolbar: {
+      show: true,
+      tools: {
+        download: true,
+        selection: true,
+        zoom: true,
+        zoomin: true,
+        zoomout: true,
+        pan: true,
+        reset: true
+      }
+    }
+  },
+  colors: ["#5f4e9b"],
+  plotOptions: {
+    bar: {
+      borderRadius: 6,
+      columnWidth: '60%',
+      distributed: false,
+      dataLabels: {
+        position: 'center'
+      }
+    }
+  },
+  dataLabels: {
+    enabled: true,
+    formatter: function (val) {
+      return val;
+    },
+    style: {
+      fontSize: '12px',
+      colors: ["#ffffff"]  // Texte en blanc
+    }
+  },
   series: [{ name: "Nombre de prospects", data: dataRecup }],
-  xaxis: { categories: nameList }
+  xaxis: {
+    categories: nameList,
+    labels: {
+      style: {
+        colors: "#333",
+        fontSize: '12px'
+      }
+    },
+    axisBorder: {
+      show: true,
+      color: '#e0e0e0'
+    },
+    axisTicks: {
+      show: true,
+      color: '#e0e0e0'
+    }
+  },
+  yaxis: {
+    labels: {
+      style: {
+        colors: "#333",
+        fontSize: '12px'
+      }
+    },
+  },
+  grid: {
+    borderColor: '#f2f2f2',
+    row: {
+      colors: ['transparent', 'transparent']
+    }
+  },
+  tooltip: {
+    y: {
+      formatter: function(val) {
+        return val + " prospects"
+      }
+    }
+  }
 };
 
 function getPersonneParVille(){
@@ -85,12 +167,10 @@ async function handleClick(ville) {
   }
 }
 
-
 watch(selectedVilles, (newValue) => {
   console.log("Villes sélectionnés :", newValue);
   console.log("Datas des trucs", dataRecup);
   console.log("Bien garçon", selectedVilles);
-
 });
 
 function getVille() {
@@ -107,9 +187,152 @@ function getVille() {
 }
 
 onMounted(()=>
-  getPersonneParVille(),
+    getPersonneParVille(),
   getVille()
 )
-
 </script>
 
+<style scoped>
+.page-container {
+  padding: 30px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: 30px auto;
+  border-top: 5px solid #5f4e9b;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2f2769;
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f2f2f2;
+}
+
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #eaeaea;
+}
+
+.chart {
+  max-width: 800px;
+  width: 100%;
+  height: 400px;
+}
+
+.checkbox-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  border: 1px solid #eaeaea;
+}
+
+.filter-label {
+  width: 100%;
+  margin-bottom: 10px;
+  font-weight: 500;
+  text-align: center;
+  color: #2f2769;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: #333;
+}
+
+.checkbox-label:hover {
+  background-color: #f5f5ff;
+  transform: scale(1.03);
+  border-color: #5f4e9b;
+}
+
+/* Style personnalisé pour les checkboxes */
+.checkbox-label input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #5f4e9b;
+  border-radius: 4px;
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: all 0.2s;
+}
+
+.checkbox-label input[type="checkbox"]:checked {
+  background-color: #5f4e9b;
+}
+
+.checkbox-label input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-label input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(95, 78, 155, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .chart {
+    height: 300px;
+  }
+
+  .checkbox-container {
+    padding: 15px;
+  }
+
+  .checkbox-label {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+</style>

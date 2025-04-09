@@ -4,6 +4,8 @@ import isis.projet.backend.entity.Salon;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface SalonRepository extends JpaRepository<Salon, Integer> {
@@ -21,5 +23,8 @@ public interface SalonRepository extends JpaRepository<Salon, Integer> {
     @Modifying
     @Query("UPDATE Salon s SET s.nom = :nvNom WHERE s.idSalon = :idSalon")
     void modifNom(Integer idSalon, String nvNom);
+
+    @Query("SELECT s.date FROM Salon s")
+    List<LocalDate> getDate();
 
 }
